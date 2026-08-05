@@ -13,6 +13,15 @@ public class TitleSoundScript : MonoBehaviour
     [SerializeField, Min(0f)] private float bgmFadeInDuration = 1.5f;
     [SerializeField] private AudioSource bgmAudioSource;
 
+    [Header("ランダムノイズ")]
+    [SerializeField] private AudioClip[] noiseSounds;
+    [SerializeField, Min(0.1f)] private float minimumNoiseInterval = 5f;
+    [SerializeField, Min(0.1f)] private float maximumNoiseInterval = 15f;
+    [SerializeField, Min(0.1f)] private float minimumNoiseDuration = 0.5f;
+    [SerializeField, Min(0.1f)] private float maximumNoiseDuration = 2f;
+    [SerializeField, Range(0f, 1f)] private float noiseVolume = 1f;
+    [SerializeField] private AudioSource noiseAudioSource;
+
     private AudioSource soundEffectAudioSource;
 
     private void Awake()
@@ -27,12 +36,27 @@ public class TitleSoundScript : MonoBehaviour
 
         bgmAudioSource.playOnAwake = false;
         bgmAudioSource.loop = true;
+
+        if (noiseAudioSource == null ||
+            noiseAudioSource == soundEffectAudioSource ||
+            noiseAudioSource == bgmAudioSource)
+        {
+            noiseAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        noiseAudioSource.playOnAwake = false;
+        noiseAudioSource.loop = true;
     }
 
     private void Start()
     {
         PlayTitleSound();
         PlayBgm();
+
+        if (noiseSounds != null && noiseSounds.Length > 0)
+        {
+            StartCoroutine(PlayRandomNoise());
+        }
     }
 
     private void PlayTitleSound()
@@ -84,5 +108,51 @@ public class TitleSoundScript : MonoBehaviour
         }
 
         bgmAudioSource.volume = bgmVolume;
+    }
+
+    private IEnumerator PlayRandomNoise()
+    {
+        while (true)
+        {
+            float minimumInterval = Mathf.Max(0.1f, Mathf.Min(minimumNoiseInterval, maximumNoiseInterval));
+            float maximumInterval = Mathf.Max(minimumInterval, maximumNoiseInterval);
+            float waitTime = Random.Range(minimumInterval, maximumInterval);
+
+            yield return new WaitForSecondsRealtime(waitTime);
+
+            AudioClip noise = GetRandomNoise();
+
+            if (noise != null)
+            {
+                float minimumDuration = Mathf.Max(0.1f, Mathf.Min(minimumNoiseDuration, maximumNoiseDuration));
+                float maximumDuration = Mathf.Max(minimumDuration, maximumNoiseDuration);
+                float playDuration = Random.Range(minimumDuration, maximumDuration);
+
+                noiseAudioSource.clip = noise;
+                noiseAudioSource.volume = noiseVolume;
+                noiseAudioSource.Play();
+
+                yield return new WaitForSecondsRealtime(playDuration);
+
+                noiseAudioSource.Stop();
+            }
+        }
+    }
+
+    private AudioClip GetRandomNoise()
+    {
+        int startIndex = Random.Range(0, noiseSounds.Length);
+
+        for (int offset = 0; offset < noiseSounds.Length; offset++)
+        {
+            AudioClip noise = noiseSounds[(startIndex + offset) % noiseSounds.Length];
+
+            if (noise != null)
+            {
+                return noise;
+            }
+        }
+
+        return null;
     }
 }
