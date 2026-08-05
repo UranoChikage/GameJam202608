@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
-[RequireComponent(typeof(CharacterController))]
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
-     //移動
-     float PlayerSpeed = 5f;//移動速度
-     float jumpHeight = 1.5f;//ジャンプの高さ
-     float gravity = -20f;//重力
+   
+    [SerializeField] float moveSpeed = 5f;//移動速度
+    [SerializeField] float jumpHeight = 1.5f;//ジャンプの高さ
+    [SerializeField] float gravity = -20f;//重力の強さ
 
-     //視点
+    //視点
      Transform playerCamera;//動かすカメラ
-     float mouseSensitivity = 2f;//マウス感度
-     float lookLimit = 90f;//下を向ける限界角度
+    [SerializeField, Range(0.01f, 1f)]
+    float CameraSpeed = 0.1f;//カメラの感度
+     float lookLimit = 90f;//カメラの限界角度
 
     CharacterController controller;
     float verticalVelocity;
@@ -21,11 +23,25 @@ public class PlayerScript : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+
+        if (playerCamera == null)
+            playerCamera = GetComponentInChildren<Camera>()?.transform;
+
+        if (playerCamera == null)
+        {
+            Debug.LogError(
+                "Playerの子にCameraがありません。",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
         LockCursor();
-        //ゲーム開始時にカーソルを画面中央へ固定
     }
 
-    void Update()
+    public void Update()
     {
         HandleCursor();
 
@@ -35,56 +51,66 @@ public class PlayerScript : MonoBehaviour
         Move();
     }
 
-    void Move()
+    public void Move()
     {
-        // A・D
-        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (Keyboard.current == null)
+            return;
 
-        // W・S
-        float vertical = Input.GetAxisRaw("Vertical");
+        Vector2 input = Vector2.zero;
+
+        if (Keyboard.current.wKey.isPressed)
+            input.y += 1f;//前移動
+
+        if (Keyboard.current.sKey.isPressed)
+            input.y -= 1f;//後ろ移動
+
+        if (Keyboard.current.dKey.isPressed)
+            input.x += 1f;//右移動
+
+        if (Keyboard.current.aKey.isPressed)
+            input.x -= 1f;//左移動
+
+        // 斜め移動が速くなることを防ぐ
+        input = Vector2.ClampMagnitude(input, 1f);
 
         Vector3 direction =
-            transform.right * horizontal +
-            transform.forward * vertical;
+            transform.right * input.x +
+            transform.forward * input.y;
 
-        // 斜め移動が速くなるのを防止
-        direction = direction.normalized;
-
-        // 地面にいるとき
         if (controller.isGrounded)
         {
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
-            // Spaceでジャンプ
-            if (Input.GetButtonDown("Jump"))
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 verticalVelocity =
                     Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
         }
 
-        // 重力
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 velocity = direction * PlayerSpeed;
+        Vector3 velocity = direction * moveSpeed;
         velocity.y = verticalVelocity;
 
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void Look()
+   public void Look()
     {
-        float mouseX =
-            Input.GetAxis("Mouse X") * mouseSensitivity;
+        if (Mouse.current == null)
+            return;
 
-        float mouseY =
-            Input.GetAxis("Mouse Y") * mouseSensitivity;
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
-        // プレイヤーを左右に回転
+        float mouseX = mouseDelta.x * CameraSpeed;
+        float mouseY = mouseDelta.y * CameraSpeed;
+
+        // 左右はPlayer全体を回す
         transform.Rotate(Vector3.up * mouseX);
 
-        // カメラを上下に回転
+        // 上下はカメラだけを回す
         cameraPitch -= mouseY;
         cameraPitch = Mathf.Clamp(
             cameraPitch,
@@ -96,28 +122,47 @@ public class PlayerScript : MonoBehaviour
             Quaternion.Euler(cameraPitch, 0f, 0f);
     }
 
-    void HandleCursor()
+   public void HandleCursor()
     {
-        // Escでカーソル解除
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UnlockCursor();
+        if (Keyboard.current != null &&
+            Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+                UnlockCursor();
+        }
 
-        // 左クリックで再固定
-        if (!cursorLocked && Input.GetMouseButtonDown(0))
+        if (!cursorLocked &&
+            Mouse.current != null &&
+            Mouse.current.leftButton.wasPressedThisFrame)
+        {
             LockCursor();
+        }
     }
 
-    void LockCursor()
+   public void LockCursor()
     {
         cursorLocked = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    void UnlockCursor()
+   public void UnlockCursor()
     {
         cursorLocked = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void Use()//使う
+    {
+
+    }
+
+    public　void Drop()//落とす
+    {
+
+    }
+    public void PickUp()//持つ
+    {
+
     }
 }
