@@ -38,6 +38,11 @@ public class TitleSoundScript : MonoBehaviour
 
     private void Awake()
     {
+        if (GetComponent<TitleBlackoutScript>() == null)
+        {
+            gameObject.AddComponent<TitleBlackoutScript>();
+        }
+
         soundEffectAudioSource = GetComponent<AudioSource>();
         soundEffectAudioSource.playOnAwake = false;
 
