@@ -481,9 +481,9 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 0.37
-        y: 0
-        z: 0.49999997
+        x: -3.19
+        y: 0.0009999946
+        z: 2.44
       TangentIn:
         x: -0
         y: -0
@@ -517,9 +517,9 @@ MonoBehaviour:
           z: 0
           w: 0
     - Position:
-        x: -0.00000008940697
+        x: 0.49
         y: 0
-        z: -0.4999999
+        z: -2.041
       TangentIn:
         x: -0
         y: -0
@@ -576,7 +576,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462445044}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
   m_Name: 
@@ -589,15 +589,15 @@ MonoBehaviour:
   m_Sides: 8
   m_SegmentsPerUnit: 4
   m_Capped: 0
-  m_Radius: 0.25
+  m_Radius: 0.28
   m_Range: {x: 0, y: 1}
   m_FlipNormals: 0
   m_Shape:
-    rid: 476595527219151156
+    rid: 476595530195009539
   references:
     version: 2
     RefIds:
-    - rid: 476595527219151156
+    - rid: 476595530195009539
       type: {class: Road, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
       data: 
 --- !u!23 &462445048
@@ -1103,9 +1103,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104103943}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00014748597, y: 0.9982833, z: 0.000008653193, w: -0.058570582}
-  m_LocalPosition: {x: 0.5074069, y: 0, z: 0.11563983}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4, y: 0.15, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1123,7 +1123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spline
   container: {fileID: 462445045}
-  t: 0.497
+  t: 0
+  duration: 5
+  offset: {x: 0, y: 0.15, z: 0}
 --- !u!1 &1342485318
 GameObject:
   m_ObjectHideFlags: 0

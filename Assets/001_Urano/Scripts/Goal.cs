@@ -4,7 +4,10 @@ public class Goal : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Goal reached!");
+        if (other.transform.TryGetComponent<DirController>(out _))
+        {
+            Debug.Log("Goal reached!");
+        }
     }
 
 }
