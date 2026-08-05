@@ -992,6 +992,20 @@ MonoBehaviour:
   maximumNoiseDuration: 1.2
   noiseVolume: 1
   noiseAudioSource: {fileID: 2114791440}
+  degradedSounds:
+  - {fileID: 8300000, guid: 01f074b5474719a418cd524cd6f56eab, type: 3}
+  - {fileID: 8300000, guid: 2a646050d7e627b4fa19130dc88d60ea, type: 3}
+  - {fileID: 8300000, guid: e558223764f60b341a9dfe0561f6a20d, type: 3}
+  - {fileID: 8300000, guid: 68d05d16144d86249b215d3b1aa12d0c, type: 3}
+  - {fileID: 8300000, guid: de8d4bcb2a66b97478dc0219fdc8f74a, type: 3}
+  minimumDegradedSoundInterval: 4.5
+  maximumDegradedSoundInterval: 15
+  minimumDegradedSoundDuration: 0.5
+  maximumDegradedSoundDuration: 1.3
+  degradedSoundVolume: 1
+  lowPassCutoff: 3000
+  highPassCutoff: 500
+  distortionLevel: 0.2
 --- !u!1 &1703092430
 GameObject:
   m_ObjectHideFlags: 0
