@@ -403,7 +403,7 @@ MonoBehaviour:
   starSmokePrefab: {fileID: 100006, guid: a49596ebf788acd4ab1281bffea444b1, type: 3}
   lingeringSmokePrefab: {fileID: 100008, guid: 1dbc518224e49f34095aab42fe05751a, type: 3}
   effectScale: 0.55
-  smokeDelay: 0.08
+  smokeDelay: 0.035
   useCameraShake: 1
   shakeStrength: 0.09
   shakeDuration: 0.18
