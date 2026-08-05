@@ -51,10 +51,11 @@ public class FPSCameraController : MonoBehaviour
         // 接地判定
         isGrounded = groundCheck != null &&
             Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
-
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        //Debug.Log(isGrounded);
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequested = true;
+            Debug.Log("aaaaaaa");
         }
     }
 
