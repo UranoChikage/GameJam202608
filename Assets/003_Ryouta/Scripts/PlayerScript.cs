@@ -6,7 +6,7 @@ public class PlayerScript : MonoBehaviour
 {
     //視点
     [SerializeField] Transform playerCamera;//動かすカメラ
-   
+
     CharacterController controller;
     float verticalVelocity;
 
@@ -42,12 +42,12 @@ public class PlayerScript : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
-      
+
     }
 
     public void Update()
     {
-    
+
 
         Move();
         if (Keyboard.current.eKey.isPressed) { Use(); }
@@ -56,16 +56,16 @@ public class PlayerScript : MonoBehaviour
     Keyboard.current.fKey.wasPressedThisFrame)//押した瞬間だけ
         {
             DropOrPickUp();
-            
+
             Debug.Log("Fキーを押しました");
-            
+
         }
 
     }
 
     public void Move()
     {
-    
+
 
         if (controller.isGrounded)
         {
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
 
     }
 
- 
+
 
     public void Use()//使う
     {
@@ -238,5 +238,9 @@ public class PlayerScript : MonoBehaviour
 
         heldRigidbody.transform.rotation =
             playerCamera.rotation;
+    }
+    private void EnegyDrink(int value, float time  )
+    {
+          
     }
 }
