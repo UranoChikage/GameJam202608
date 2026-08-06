@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FPSCameraController : MonoBehaviour
@@ -109,8 +110,8 @@ public class FPSCameraController : MonoBehaviour
         cameraTransform.localRotation = dirController.GetPitchRotation();
     }
 
-    
-        private void Move()
+
+    private void Move()
     {
         float currentSpeed =
             isCrouching
@@ -127,8 +128,8 @@ public class FPSCameraController : MonoBehaviour
         velocity.z = targetVelocity.z;
 
         rb.linearVelocity = velocity;
-    
-}
+
+    }
 
     private void Rotate()
     {
@@ -198,5 +199,31 @@ public class FPSCameraController : MonoBehaviour
                 targetPosition,
                 crouchSpeed * Time.deltaTime
             );
+    }
+    public void ApplySpeedBoost(
+     float value,
+     float time)
+    {
+        StartCoroutine(
+            SpeedBoostCoroutine(value, time)
+        );
+    }
+
+    private IEnumerator SpeedBoostCoroutine(
+        float value,
+        float time)
+    {
+        moveSpeed += value;
+
+        Debug.Log(
+            time + "秒間、速度が" +
+            value + "上がりました"
+        );
+
+        yield return new WaitForSeconds(time);
+
+        moveSpeed -= value;
+
+        Debug.Log("速度アップが終了しました");
     }
 }

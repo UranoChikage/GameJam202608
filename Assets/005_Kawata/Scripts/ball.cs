@@ -10,13 +10,10 @@ public class ball : MonoBehaviour, IItem
 
     public void Use(PlayerScript player, bool interactFailed)
     {
-        // インタラクト失敗時（何もインタラクトできる物が無かった時）だけ投げる
-        if (!interactFailed) return;
-
         if (player)
         {
-            PickUp(player);
-            rb.AddForce(Vector3.forward * 5, ForceMode.Impulse);
+            player.DropOrPickUp();
+            rb.AddForce(player.Forward * 5, ForceMode.Impulse);
             Debug.Log("使った");
         }
 

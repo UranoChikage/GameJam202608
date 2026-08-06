@@ -21,6 +21,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dropDistance = 1f;
     [SerializeField] float dropHeight = 0.5f;
 
+    [SerializeField]
+    FPSCameraController movementController;
+
     Rigidbody heldRigidbody;
     IItem heldItem;
 
@@ -35,6 +38,7 @@ public class PlayerScript : MonoBehaviour
 
     IInteractable currentInteractable;
     RaycastHit currentInteractHit;
+    public Vector3 Forward => playerCamera.forward;
 
     /// <summary>死亡判定を発火し、直近のSavePoint（StartPoint）へリスポーンする</summary>
     public void Die()
@@ -115,6 +119,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Use(bool interactFailed)//使う
     {
+        // 持っているアイテムを使用
         heldItem?.Use(this, interactFailed);
     }
 
@@ -150,7 +155,7 @@ public class PlayerScript : MonoBehaviour
 
         bool isHit = Physics.Raycast(
             playerCamera.position,
-            playerCamera.forward,
+            Forward,
             out RaycastHit hit,
             rayDistance
         );
@@ -225,7 +230,7 @@ public class PlayerScript : MonoBehaviour
 
         // カメラの向きから上下方向を除く
         Vector3 flatForward = Vector3.ProjectOnPlane(
-            playerCamera.forward,
+            Forward,
             Vector3.up
         ).normalized;
 
@@ -283,7 +288,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Physics.Raycast(
             playerCamera.position,
-            playerCamera.forward,
+            Forward,
             out RaycastHit hit,
             rayDistance))
         {
@@ -319,7 +324,7 @@ public class PlayerScript : MonoBehaviour
             // 当たった場合は緑色
             Debug.DrawRay(
                 playerCamera.position,
-                playerCamera.forward * hit.distance,
+                Forward * hit.distance,
                 Color.green,
                 1f
             );
@@ -333,10 +338,13 @@ public class PlayerScript : MonoBehaviour
             // 当たらなかった場合は赤色
             Debug.DrawRay(
                 playerCamera.position,
-                playerCamera.forward * rayDistance,
+                Forward * rayDistance,
                 Color.red,
                 1f
             );
+
+            // インタラクト失敗時、通すかどうかはItem側が判断する
+            Use(true);
         }
     }
 
@@ -349,7 +357,7 @@ public class PlayerScript : MonoBehaviour
 
             Gizmos.DrawRay(
                 playerCamera.position,
-                playerCamera.forward * rayDistance
+                Forward * rayDistance
             );
         }
 
@@ -398,7 +406,7 @@ public class PlayerScript : MonoBehaviour
 
         bool isHit = Physics.Raycast(
             playerCamera.position,
-            playerCamera.forward,
+            Forward,
             out currentInteractHit,
             rayDistance
         );
@@ -408,7 +416,7 @@ public class PlayerScript : MonoBehaviour
             // 何にも当たっていない
             Debug.DrawRay(
                 playerCamera.position,
-                playerCamera.forward * rayDistance,
+                Forward * rayDistance,
                 Color.yellow
             );
 
@@ -427,7 +435,7 @@ public class PlayerScript : MonoBehaviour
 
         Debug.DrawRay(
             playerCamera.position,
-            playerCamera.forward * rayDistance,
+            Forward * rayDistance,
             rayColor
         );
     }
@@ -447,6 +455,25 @@ public class PlayerScript : MonoBehaviour
                 30f
             ),
             "[E] インタラクト"
+        );
+    }
+
+    public void EnergyDrink(
+    float value,
+    float time)
+    {
+        if (movementController == null)
+        {
+            Debug.LogError(
+                "Movement Controllerが未設定です"
+            );
+
+            return;
+        }
+
+        movementController.ApplySpeedBoost(
+            value,
+            time
         );
     }
 }
