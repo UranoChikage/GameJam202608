@@ -238,6 +238,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: holdPositions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: 'holdPositions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1694546398}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1568,6 +1576,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1694546398 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7430441413863143683, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+  m_PrefabInstance: {fileID: 252016827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1734826477
 GameObject:
   m_ObjectHideFlags: 0
