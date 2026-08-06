@@ -26,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
     // ダメージ処理
     public void TakeDamage(int damageAmount, Vector3 attackerPosition)
     {
-        Debug.Log("テイクダメージが呼ばれました！！");
         // 無敵時間中、または死亡済みの場合は処理しない
         if (isInvincible || currentHealth <= 0) return;
 
