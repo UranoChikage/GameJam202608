@@ -4,7 +4,7 @@ public class TestInteractable :
     MonoBehaviour,
     IInteractable
 {
-    public void Interact()
+    public void Interact(PlayerScript player)
     {
         Debug.Log(
             gameObject.name +

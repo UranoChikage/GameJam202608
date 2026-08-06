@@ -344,7 +344,7 @@ public class PlayerScript : MonoBehaviour
                     "をインタラクトします"
                 );
 
-                //interactable.Interact();
+                interactable.Interact(this);
                 Use(false);
             }
             else
