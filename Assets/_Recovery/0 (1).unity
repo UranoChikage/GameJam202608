@@ -930,7 +930,6 @@ GameObject:
   - component: {fileID: 2067570159}
   - component: {fileID: 2067570158}
   - component: {fileID: 2067570162}
-  - component: {fileID: 2067570163}
   m_Layer: 0
   m_Name: Item
   m_TagString: Item
@@ -1058,18 +1057,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2067570163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067570157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29aca352643bd684dadca9329717667b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ball
 --- !u!1 &2082834216
 GameObject:
   m_ObjectHideFlags: 0
