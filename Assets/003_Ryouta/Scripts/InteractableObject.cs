@@ -4,8 +4,11 @@ public class InteractableObject :
     MonoBehaviour,
     IInteractable
 {
-    public void Interact()
+    public void Interact(PlayerScript player)
     {
-        Debug.Log("インタラクトされました");
+        Debug.Log(
+            gameObject.name +
+            "をインタラクトしました"
+        );
     }
 }
