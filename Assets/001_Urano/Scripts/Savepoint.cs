@@ -9,6 +9,12 @@ public class Savepoint : MonoBehaviour
         if (other.transform.TryGetComponent<DirController>(out _)) 
         {
             point.transform.position = transform.position;
+            MeshRenderer renderer = GetComponent<MeshRenderer>();
+                if (renderer != null)
+            {
+                renderer.material.color = Color.green;
+            }
+
         }
     }
 }
