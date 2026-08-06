@@ -21,6 +21,16 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dropDistance = 1f;
     [SerializeField] float dropHeight = 0.5f;
 
+    [SerializeField]
+    FPSCameraController movementController;
+
+    [Header("HP")]
+    [SerializeField] int maxHP = 3;
+    [SerializeField] int currentHP;
+
+    public int CurrentHP => currentHP;
+    public int MaxHP => maxHP;
+
     Rigidbody heldRigidbody;
     IItem heldItem;
 
@@ -53,7 +63,8 @@ public class PlayerScript : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
-      
+        // ゲーム開始時は最大HP
+        currentHP = maxHP;
     }
 
   
@@ -64,9 +75,16 @@ public class PlayerScript : MonoBehaviour
         CheckInteractable();
 
         if (Keyboard.current != null &&
-    Keyboard.current.eKey.wasPressedThisFrame)
+         Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Interact();
+            if (currentInteractable != null)
+            {
+                Interact();
+            }
+            else
+            {
+                Use();
+            }
         }
 
         if (Keyboard.current != null &&
@@ -86,7 +104,25 @@ public class PlayerScript : MonoBehaviour
 
         }
     }
+    public void TakeDamage(int damage)
+    {
+        if (currentHP <= 0)
+            return;
 
+        currentHP -= damage;
+        currentHP = Mathf.Max(currentHP, 0);
+
+        Debug.Log(
+            "ダメージ：" + damage +
+            " / HP：" + currentHP +
+            " / " + maxHP
+        );
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("プレイヤーが死亡しました");
+        }
+    }
     private Transform GetHoldPosition()
     {
         if (holdPositions == null ||
@@ -116,9 +152,14 @@ public class PlayerScript : MonoBehaviour
 
     public void Use(bool interactFailed)//使う
     {
+        // 持っているアイテムを使用
         heldItem?.Use(this, interactFailed);
     }
 
+    public void Use()
+{
+    heldItem?.Use(this, true);
+}
     // 持っていれば落とす、持っていなければ拾う
     public void DropOrPickUp()
     {
@@ -303,7 +344,7 @@ public class PlayerScript : MonoBehaviour
                     "をインタラクトします"
                 );
 
-                interactable.Interact();
+                interactable.Interact(this);
                 Use(false);
             }
             else
@@ -452,5 +493,60 @@ public class PlayerScript : MonoBehaviour
             ),
             "[E] インタラクト"
         );
+    }
+
+    public void EnergyDrink(
+    float value,
+    float time)
+    {
+        if (movementController == null)
+        {
+            Debug.LogError(
+                "Movement Controllerが未設定です"
+            );
+
+            return;
+        }
+
+        movementController.ApplySpeedBoost(
+            value,
+            time
+        );
+    }
+
+    public bool Heal(int healAmount)
+    {
+        // HPが最大なら回復しない
+        if (currentHP >= maxHP)
+        {
+            Debug.Log("HPは最大です");
+            return false;
+        }
+
+        currentHP += healAmount;
+        currentHP = Mathf.Min(currentHP, maxHP);
+
+        Debug.Log(
+            healAmount + "回復しました" +
+            " / HP：" + currentHP +
+            " / " + maxHP
+        );
+
+        return true;
+    }
+
+    public void ConsumeHeldItem()
+    {
+        if (heldRigidbody == null)
+            return;
+
+        GameObject itemObject =
+            heldRigidbody.gameObject;
+
+        heldRigidbody = null;
+        heldItem = null;
+        heldColliders = null;
+
+        Destroy(itemObject);
     }
 }
