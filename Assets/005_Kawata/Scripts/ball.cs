@@ -8,12 +8,12 @@ public class ball : MonoBehaviour, IItem
         rb= GetComponent<Rigidbody>();
     }
 
-    public void Use(PlayerScript player)
+    public void Use(PlayerScript player, bool interactFailed)
     {
         if (player)
         {
-            PickUp(player);
-            rb.AddForce(Vector3.forward * 5, ForceMode.Impulse);
+            player.DropOrPickUp();
+            rb.AddForce(player.Forward * 5, ForceMode.Impulse);
             Debug.Log("使った");
         }
 
@@ -21,6 +21,6 @@ public class ball : MonoBehaviour, IItem
     
     public void PickUp(PlayerScript player)
     {
-        //後でプレイヤーがなんかする
+        Debug.Log("ボールを拾った");
     }
 }
