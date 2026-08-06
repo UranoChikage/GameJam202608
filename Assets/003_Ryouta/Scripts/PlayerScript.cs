@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-[RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
     //視点
     [SerializeField] Transform playerCamera;//動かすカメラ
    
-    CharacterController controller;
-    float verticalVelocity;
-
-
     [SerializeField] Transform[] holdPositions;
 
     // 使用する番号。0が最初
@@ -62,8 +57,6 @@ public class PlayerScript : MonoBehaviour
 
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
-
         // ゲーム開始時は最大HP
         currentHP = maxHP;
     }
@@ -71,8 +64,6 @@ public class PlayerScript : MonoBehaviour
   
     public void Update()
     {
-        Move();
-
         CheckInteractable();
 
         if (Keyboard.current != null &&
@@ -96,15 +87,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void Move()
-    {
-        if (controller.isGrounded)
-        {
-            if (verticalVelocity < 0f)
-                verticalVelocity = -2f;
-
-        }
-    }
+    
     public void TakeDamage(int damage)
     {
         if (currentHP <= 0)

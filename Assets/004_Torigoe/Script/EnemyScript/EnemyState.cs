@@ -29,6 +29,7 @@ public class PatrolState : IEnemyState
 }
 
 // 2. 追跡状態（Chase）
+// ChaseState（追跡状態）の Update メソッド部分
 public class ChaseState : IEnemyState
 {
     public void Enter(EnemyAI enemy)
@@ -40,25 +41,16 @@ public class ChaseState : IEnemyState
 
     public void Update(EnemyAI enemy)
     {
+        // 攻撃直後の硬直中は追跡を止める
+        if (enemy.IsStopped) return;
+
         if (enemy.CanSeePlayer())
         {
+            // 距離チェックはせず、常にプレイヤーへ向かって走らせる（衝突はOnCollisionEnterで検知）
             enemy.agent.SetDestination(enemy.player.position);
-
-            // --- 変更点: 接近時のダメージ攻撃判定 ---
-            float distance = Vector3.Distance(enemy.transform.position, enemy.player.position);
-            if (distance <= enemy.attackDistance)
-            {
-                // プレイヤーの PlayerHealth コンポーネントを取得して攻撃
-                PlayerHealth playerHealth = enemy.player.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
-                {
-                    enemy.AttackPlayer(playerHealth);
-                }
-            }
         }
         else
         {
-            // 視線が切れたら見失う状態へ
             enemy.ChangeState(new LostState());
         }
     }
