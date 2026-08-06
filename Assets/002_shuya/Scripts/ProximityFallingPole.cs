@@ -7,6 +7,7 @@ public sealed class ProximityFallingPole : MonoBehaviour
     public enum FallAxis { X, Z }
 
     [Header("検知設定")]
+    [SerializeField] private Transform player;
     [SerializeField, Min(0.1f)] private float triggerDistance = 3f;
 
     [Header("倒れる設定")]
@@ -14,11 +15,15 @@ public sealed class ProximityFallingPole : MonoBehaviour
     [SerializeField, Range(-180f, 180f)] private float fallAngle = 80f;
     [SerializeField, Min(0.01f)] private float fallDuration = 0.8f;
 
-    private Transform player;
     private bool hasFallen;
 
     private void Start()
     {
+        if (player != null)
+        {
+            return;
+        }
+
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
