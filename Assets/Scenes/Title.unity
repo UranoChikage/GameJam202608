@@ -339,7 +339,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480946373}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 480946375}
+        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &480946373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,8 +744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba021f876b54659bcbf107f15cbd5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleFadeInScript
-  delay: 1.2
-  duration: 2.3
+  fadeInTime: 3
 --- !u!1 &1135855853
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +980,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleSoundScript
   titleSound: {fileID: 8300000, guid: fd99ca186a3a0f34586da1811bde8206, type: 3}
+  bgm: {fileID: 8300000, guid: 97a41daa5ff852d42ad1ca67a777aab1, type: 3}
+  bgmVolume: 1
+  bgmFadeInDuration: 5
+  bgmAudioSource: {fileID: 1519726489}
 --- !u!1 &1703092430
 GameObject:
   m_ObjectHideFlags: 0

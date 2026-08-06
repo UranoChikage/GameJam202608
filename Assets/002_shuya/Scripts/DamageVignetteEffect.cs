@@ -1,11 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 /// <summary>
-/// ダメージを受けたとき、画面の周囲を一瞬赤くするスクリプト。
+
+
+/// ダメージを受けたとき、画面の周囲を一瞬赤くする関数 PlayDamageEffect()
+
+
 /// Global Volumeと同じGameObjectに付けて使用する。
 /// </summary>
 public sealed class DamageVignetteEffect : MonoBehaviour
