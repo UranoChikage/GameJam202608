@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -16,27 +17,80 @@ public class EnemyAI : MonoBehaviour
     public float chaseSpeed = 5.5f;
     public float viewDistance = 10.0f;
     [Range(0, 360)] public float viewAngle = 120.0f;
-    public float searchDuration = 3.0f; // 見失ってから巡回に戻るまでの時間
+    public float searchDuration = 3.0f;
 
     [Header("攻撃設定")]
-    public float attackDistance = 1.5f; // 攻撃（ダメージ）が届く距離
-    public int attackDamage = 1;       // 1回あたりのダメージ量
+    public int attackDamage = 1;       // ダメージ量
+    public float attackCooldown = 1.0f; // 攻撃後に敵が止まる時間（秒）
 
     [HideInInspector] public NavMeshAgent agent;
     private IEnemyState currentState;
     private int currentWaypointIndex = 0;
+    private bool isStopped = false; // 硬直中フラグ
+
+    public bool IsStopped => isStopped;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
-        // 最初は「1. 巡回状態」からスタート
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null) player = playerObj.transform;
+        }
+
         ChangeState(new PatrolState());
     }
 
     void Update()
     {
+        // 攻撃直後の硬直中は追跡や移動の処理を行わない
+        if (isStopped) return;
+
         currentState?.Update(this);
+    }
+
+    // ★物理的に衝突した瞬間にダメージ・吹き飛ばし・敵停止を発動！
+    private void OnCollisionEnter(Collision collision)
+    {
+        // ぶつかった相手がプレイヤーの場合
+        if (collision.gameObject.CompareTag("Player") || collision.transform == player)
+        {
+            if (isStopped) return;
+
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                // 1. ダメージ ＆ 吹き飛ばしを実行
+                playerHealth.TakeDamage(attackDamage, transform.position);
+
+                // 2. エネミー自身をピタッと停止させる
+                StartCoroutine(StopMovementRoutine(attackCooldown));
+
+            }
+        }
+    }
+
+    // 攻撃後にエネミーの足を止める処理
+    public IEnumerator StopMovementRoutine(float stopTime)
+    {
+        isStopped = true;
+
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.isStopped = true;       // NavMeshAgentの移動停止
+            agent.velocity = Vector3.zero; // 慣性を切る
+        }
+
+        yield return new WaitForSeconds(stopTime);
+
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.isStopped = false;      // 移動再開
+        }
+
+        isStopped = false;
     }
 
     public void ChangeState(IEnemyState newState)
@@ -46,7 +100,6 @@ public class EnemyAI : MonoBehaviour
         currentState.Enter(this);
     }
 
-    // --- 視界（プレイヤー検知）判定 ---
     public bool CanSeePlayer()
     {
         if (player == null) return false;
@@ -58,7 +111,6 @@ public class EnemyAI : MonoBehaviour
 
         if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2f)
         {
-            // 障害物（Obstacleレイヤー）の陰に隠れていないか確認
             if (!Physics.Raycast(transform.position + Vector3.up, dirToPlayer, distanceToPlayer, LayerMask.GetMask("Obstacle")))
             {
                 return true;
@@ -67,7 +119,6 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
-    // --- 巡回地点の更新 ---
     public void MoveToNextWaypoint()
     {
         if (waypoints == null || waypoints.Length == 0) return;
@@ -75,14 +126,6 @@ public class EnemyAI : MonoBehaviour
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
     }
 
-    // --- 攻撃実行 ---
-    public void AttackPlayer(PlayerHealth playerHealth)
-    {
-        // プレイヤーにダメージを与える（自分の位置を渡してノックバック方向を計算させる）
-        playerHealth.TakeDamage(attackDamage, transform.position);
-    }
-
-    // --- 演出・補助用 ---
     public void SetLightColor(Color color)
     {
         if (eyeLight != null) eyeLight.color = color;
@@ -94,12 +137,5 @@ public class EnemyAI : MonoBehaviour
         {
             audioSource.PlayOneShot(detectSound);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // ギズモで視界距離を表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, viewDistance);
     }
 }

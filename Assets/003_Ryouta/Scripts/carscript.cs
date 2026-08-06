@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
-public interface Taihou
+public class carscript : MovingPlatform
 {
+    public float iHitpoint = 2;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
