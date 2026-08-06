@@ -6,6 +6,9 @@ public class InteractableObject :
 {
     public void Interact()
     {
-        Debug.Log("インタラクトされました");
+        Debug.Log(
+            gameObject.name +
+            "をインタラクトしました"
+        );
     }
 }

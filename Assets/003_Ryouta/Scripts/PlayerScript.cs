@@ -21,6 +21,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dropDistance = 1f;
     [SerializeField] float dropHeight = 0.5f;
 
+    [SerializeField]
+    FPSCameraController movementController;
+
     Rigidbody heldRigidbody;
     IItem heldItem;
 
@@ -66,7 +69,12 @@ public class PlayerScript : MonoBehaviour
         if (Keyboard.current != null &&
     Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Interact();
+            if (Keyboard.current != null &&
+      Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                Interact();
+                Use();
+            }
         }
 
         if (Keyboard.current != null &&
@@ -75,6 +83,12 @@ public class PlayerScript : MonoBehaviour
             DropOrPickUp();
             Debug.Log("Fキーを押しました");
         }
+    }
+
+    private void Use()
+    {
+
+        heldItem?.Use(this, true);
     }
 
     public void Move()
@@ -116,7 +130,8 @@ public class PlayerScript : MonoBehaviour
 
     public void Use(bool interactFailed)//使う
     {
-        heldItem?.Use(this, interactFailed);
+        // 持っているアイテムを使用
+        heldItem?.Use(this, true);
     }
 
     // 持っていれば落とす、持っていなければ拾う
@@ -181,6 +196,7 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Rigidbodyがありません");
             return;
         }
+
 
         // タグ判定はIItem判定に統一（アイテム固有の反応をIItem.PickUpに任せられるようにするため）
         // ColliderまたはRigidbody本体のどちらかがItemなら拾う
@@ -451,6 +467,24 @@ public class PlayerScript : MonoBehaviour
                 30f
             ),
             "[E] インタラクト"
+        );
+    }
+    public void EnergyDrink(
+    float value,
+    float time)
+    {
+        if (movementController == null)
+        {
+            Debug.LogError(
+                "Movement Controllerが未設定です"
+            );
+
+            return;
+        }
+
+        movementController.ApplySpeedBoost(
+            value,
+            time
         );
     }
 }
