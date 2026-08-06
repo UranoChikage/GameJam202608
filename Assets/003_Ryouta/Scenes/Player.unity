@@ -865,22 +865,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389684815}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2015072293 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5481729128427928140, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-  m_PrefabInstance: {fileID: 4593674609450085504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545c7b36fc3d5a142bfc7f284e47e35a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FPSCameraController
---- !u!4 &2045573368 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7430441413863143683, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-  m_PrefabInstance: {fileID: 4593674609450085504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2067570157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,10 +989,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1046494272092851171, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3001667193202380081, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1047,38 +1027,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3001667193202380081, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172053699784985276, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3206211624390757346, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: holdPosition
-      value: 
-      objectReference: {fileID: 2045573368}
-    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: movementController
-      value: 
-      objectReference: {fileID: 2015072293}
-    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: holdPositions.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6619371282108067799, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: 'holdPositions.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2045573368}
-    - target: {fileID: 8098013983281078940, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404076167855801021, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

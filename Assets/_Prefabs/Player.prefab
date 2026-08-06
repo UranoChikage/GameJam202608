@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4840705987344532872}
   - component: {fileID: 3172053699784985276}
   - component: {fileID: 1046494272092851171}
-  - component: {fileID: 8404076167855801021}
   - component: {fileID: 6619371282108067799}
   - component: {fileID: 5481729128427928140}
   - component: {fileID: 8098013983281078940}
@@ -55,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395435977172190666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -120,31 +119,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &8404076167855801021
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395435977172190666}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6619371282108067799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,13 +132,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   playerCamera: {fileID: 4133369897047686170}
-  holdPositions: []
+  holdPositions:
+  - {fileID: 7430441413863143683}
   holdPositionIndex: 0
   pickUpDistance: 3
   rayDistance: 10
   dropDistance: 1
   dropHeight: 0.5
-  movementController: {fileID: 0}
+  movementController: {fileID: 5481729128427928140}
   maxHP: 3
   currentHP: 0
   holdOffset: {x: 0.4, y: -0.3, z: 0.8}
@@ -697,7 +672,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
