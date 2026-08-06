@@ -155,6 +155,7 @@ MonoBehaviour:
   healColor: {r: 0.1, g: 1, b: 0.25, a: 1}
   healIntensity: 0.48
   healDuration: 0.65
+  healSmoothness: 0.18
   boostColor: {r: 1, g: 0.85, b: 0.05, a: 1}
   boostIntensity: 0.58
   boostDuration: 0.45
@@ -955,6 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328aaf32c370b9b4fb0b0fbaa0e24395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
+  nextSceneName: Stage0
 --- !u!54 &527398951
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1012,7 +1014,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1166724801}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2934,6 +2936,6 @@ SceneRoots:
   - {fileID: 1087461333}
   - {fileID: 252016827}
   - {fileID: 103733019}
-  - {fileID: 1166724801}
   - {fileID: 312662527}
   - {fileID: 1736040624}
+  - {fileID: 766182923}
