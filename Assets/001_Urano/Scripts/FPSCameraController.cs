@@ -39,6 +39,10 @@ public class FPSCameraController : MonoBehaviour
     private bool isGrounded;
     private bool jumpRequested;
     private bool isCrouching;
+    private Vector3 knockbackVelocity;
+
+    [Header("ノックバック")]
+    [SerializeField, Min(0f)] private float knockbackDamping = 4f;
 
     private float standingHeight;
     private Vector3 standingCenter;
@@ -156,12 +160,28 @@ public class FPSCameraController : MonoBehaviour
         Vector3 targetVelocity =
             moveInput * currentSpeed;
 
+        targetVelocity += knockbackVelocity;
+
         Vector3 velocity = rb.linearVelocity;
 
         velocity.x = targetVelocity.x;
         velocity.z = targetVelocity.z;
 
         rb.linearVelocity = velocity;
+
+        knockbackVelocity = Vector3.MoveTowards(
+            knockbackVelocity,
+            Vector3.zero,
+            knockbackDamping * Time.fixedDeltaTime);
+    }
+
+    public void AddKnockback(Vector3 velocity)
+    {
+        knockbackVelocity = velocity;
+
+        Vector3 currentVelocity = rb.linearVelocity;
+        currentVelocity.y = Mathf.Max(currentVelocity.y, velocity.y);
+        rb.linearVelocity = currentVelocity;
     }
 
     private void Rotate()

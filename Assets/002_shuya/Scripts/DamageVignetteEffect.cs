@@ -14,6 +14,8 @@ using UnityEngine.Rendering.Universal;
 /// </summary>
 public sealed class DamageVignetteEffect : MonoBehaviour
 {
+    public static DamageVignetteEffect ActiveInstance { get; private set; }
+
     // ダメージ演出に使用するVolume。Inspectorから設定できる。
     [SerializeField] private Volume volume;
 
@@ -25,12 +27,13 @@ public sealed class DamageVignetteEffect : MonoBehaviour
 
     [Header("ヒール・ブースト")]
     [SerializeField] private Color healColor = new Color(0.1f, 1f, 0.25f, 1f);
-    [SerializeField, Range(0f, 1f)] private float healIntensity = 0.48f;
-    [SerializeField, Min(0.01f)] private float healDuration = 0.65f;
+    [SerializeField, Range(0f, 1f)] private float healIntensity = 0.24f;
+    [SerializeField, Min(0.01f)] private float healDuration = 0.9f;
+    [SerializeField, Range(0.01f, 1f)] private float healSmoothness = 0.18f;
 
     [SerializeField] private Color boostColor = new Color(1f, 0.85f, 0.05f, 1f);
     [SerializeField, Range(0f, 1f)] private float boostIntensity = 0.58f;
-    [SerializeField, Min(0.01f)] private float boostDuration = 0.45f;
+    [SerializeField, Min(0.01f)] private float boostDuration = 10f;
 
     [Header("黒い縁の鼓動")]
     // 1分間の心拍数。二連の脈動を1拍として扱う。
@@ -48,10 +51,13 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     // 演出後に戻すため、ゲーム開始時の色と強さを保存しておく。
     private Color defaultColor;
     private float defaultIntensity;
+    private float defaultSmoothness;
 
     // ゲーム開始時に一度だけ呼ばれる初期化処理。
     private void Awake()
     {
+        ActiveInstance = this;
+
         // InspectorでVolumeが設定されていなければ、同じGameObjectから探す。
         if (volume == null)
         {
@@ -69,6 +75,7 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         // ダメージ演出が終わったときに戻す、通常時の設定を記録する。
         defaultColor = vignette.color.value;
         defaultIntensity = vignette.intensity.value;
+        defaultSmoothness = vignette.smoothness.value;
     }
 
     // 毎フレーム呼ばれる処理。
@@ -111,24 +118,127 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     /// <summary>緑のヒール演出を再生する。Hキーからも呼ばれる。</summary>
     public void PlayHealEffect()
     {
-        PlayEffect(healColor, healIntensity, healDuration);
+        RestartEffect(FadeHealAtScreenEdge());
+    }
+
+    /// <summary>現在のシーンに登録されたポストプロセスへヒールを通知する。</summary>
+    public static bool TryPlayHealEffect()
+    {
+        if (ActiveInstance == null)
+        {
+            ActiveInstance = FindFirstObjectByType<DamageVignetteEffect>();
+        }
+
+        if (ActiveInstance == null || !ActiveInstance.isActiveAndEnabled)
+        {
+            Debug.LogError("ヒール用のDamageVignetteEffectが有効なシーン内に見つかりません。");
+            return false;
+        }
+
+        ActiveInstance.PlayHealEffect();
+        return true;
     }
 
     /// <summary>黄色のブースト演出を再生する。Bキーからも呼ばれる。</summary>
     public void PlayBoostEffect()
     {
-        PlayEffect(boostColor, boostIntensity, boostDuration);
+        PlayBoostEffect(boostDuration);
+    }
+
+    /// <summary>指定された効果時間だけ黄色のブースト演出を表示する。</summary>
+    public void PlayBoostEffect(float duration)
+    {
+        RestartEffect(HoldBoostVignette(Mathf.Max(0.01f, duration)));
+    }
+
+    /// <summary>現在のシーンに登録されたポストプロセスへブーストを通知する。</summary>
+    public static bool TryPlayBoostEffect(float duration)
+    {
+        // シーン読み込み順の都合で未登録なら、一度だけシーン内から探して補完する。
+        if (ActiveInstance == null)
+        {
+            ActiveInstance = FindFirstObjectByType<DamageVignetteEffect>();
+        }
+
+        if (ActiveInstance == null || !ActiveInstance.isActiveAndEnabled)
+        {
+            Debug.LogError("ブースト用のDamageVignetteEffectが有効なシーン内に見つかりません。");
+            return false;
+        }
+
+        ActiveInstance.PlayBoostEffect(duration);
+        return true;
     }
 
     private void PlayEffect(Color effectColor, float effectIntensity, float duration)
+    {
+        RestartEffect(FadeVignette(effectColor, effectIntensity, duration));
+    }
+
+    private void RestartEffect(IEnumerator effect)
     {
         // すでに演出中なら止め、連続入力でも鮮明に光らせ直す。
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
+            vignette.smoothness.value = defaultSmoothness;
         }
 
-        fadeCoroutine = StartCoroutine(FadeVignette(effectColor, effectIntensity, duration));
+        fadeCoroutine = StartCoroutine(effect);
+    }
+
+    /// <summary>画面の外周だけを、じんわり緑色にして戻すヒール演出。</summary>
+    private IEnumerator FadeHealAtScreenEdge()
+    {
+        vignette.color.Override(healColor);
+        vignette.smoothness.Override(healSmoothness);
+
+        float elapsed = 0f;
+        while (elapsed < healDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / healDuration);
+
+            // 前半でゆっくり現れ、少し保ったあと後半でゆっくり消える。
+            float fadeIn = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / 0.35f));
+            float fadeOut = 1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((t - 0.55f) / 0.45f));
+            float visibility = Mathf.Min(fadeIn, fadeOut);
+
+            vignette.color.value = Color.Lerp(defaultColor, healColor, visibility);
+            vignette.intensity.value = Mathf.Lerp(GetPulseIntensity(), healIntensity, visibility);
+            yield return null;
+        }
+
+        vignette.color.value = defaultColor;
+        vignette.intensity.value = GetPulseIntensity();
+        vignette.smoothness.value = defaultSmoothness;
+        fadeCoroutine = null;
+    }
+
+    /// <summary>黄色のブースト表示を維持し、終了直前に滑らかに消す。</summary>
+    private IEnumerator HoldBoostVignette(float duration)
+    {
+        vignette.color.Override(boostColor);
+
+        float elapsed = 0f;
+        const float fadeInDuration = 0.2f;
+        const float fadeOutDuration = 0.5f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float fadeIn = Mathf.Clamp01(elapsed / fadeInDuration);
+            float fadeOut = Mathf.Clamp01((duration - elapsed) / fadeOutDuration);
+            float visibility = Mathf.SmoothStep(0f, 1f, Mathf.Min(fadeIn, fadeOut));
+
+            vignette.color.value = Color.Lerp(defaultColor, boostColor, visibility);
+            vignette.intensity.value = Mathf.Lerp(GetPulseIntensity(), boostIntensity, visibility);
+            yield return null;
+        }
+
+        vignette.color.value = defaultColor;
+        vignette.intensity.value = GetPulseIntensity();
+        fadeCoroutine = null;
     }
 
     /// <summary>
@@ -191,5 +301,14 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         // 演出途中で無効になっても、赤い画面が残らないように元へ戻す。
         vignette.color.value = defaultColor;
         vignette.intensity.value = defaultIntensity;
+        vignette.smoothness.value = defaultSmoothness;
+    }
+
+    private void OnDestroy()
+    {
+        if (ActiveInstance == this)
+        {
+            ActiveInstance = null;
+        }
     }
 }

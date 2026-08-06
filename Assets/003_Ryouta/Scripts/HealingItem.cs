@@ -24,6 +24,7 @@ public class HealingItem :
 
         if (healed)
         {
+            DamageVignetteEffect.TryPlayHealEffect();
             player.ConsumeHeldItem();
         }
     }

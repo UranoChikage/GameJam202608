@@ -152,6 +152,13 @@ MonoBehaviour:
   volume: {fileID: 236918122}
   damageIntensity: 0.55
   fadeDuration: 1.45
+  healColor: {r: 0.1, g: 1, b: 0.25, a: 1}
+  healIntensity: 0.24
+  healDuration: 0.9
+  healSmoothness: 0.18
+  boostColor: {r: 1, g: 0.85, b: 0.05, a: 1}
+  boostIntensity: 0.58
+  boostDuration: 10
   pulseBpm: 11.8
   pulseStrength: 0.007
 --- !u!114 &236918122
@@ -937,9 +944,12 @@ MonoBehaviour:
     m_Bits: 16
   jumpForce: 5
   crouchHeight: 1
+  crouchSpeed: 10
   crouchMoveSpeed: 2.5
   crouchCameraOffset: -0.5
-  crouchSpeed: 10
+  bodyVisual: {fileID: 0}
+  crouchBodyScaleY: 0.5
+  knockbackDamping: 4
 --- !u!114 &593503243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,6 +970,9 @@ MonoBehaviour:
   rayDistance: 10
   dropDistance: 1
   dropHeight: 0.5
+  movementController: {fileID: 0}
+  maxHP: 3
+  currentHP: 0
   holdOffset: {x: 0.4, y: -0.3, z: 0.8}
   showInteractDebug: 1
 --- !u!143 &593503244
@@ -1385,6 +1398,7 @@ GameObject:
   - component: {fileID: 1164880588}
   - component: {fileID: 1164880587}
   - component: {fileID: 1164880586}
+  - component: {fileID: 1164880589}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1485,6 +1499,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164880584}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1164880589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164880584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e45ca73cc54fa6a797182ec790dcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PendulumImpact
+  knockbackSpeed: 12
+  upwardSpeed: 4
+  leadingSideThreshold: 0.15
+  minimumHitSpeed: 0.5
 --- !u!1 &1233593527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2293,7 +2323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2084569160
 MonoBehaviour:
   m_ObjectHideFlags: 0
