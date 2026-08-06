@@ -21,6 +21,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dropDistance = 1f;
     [SerializeField] float dropHeight = 0.5f;
 
+    [SerializeField]
+    FPSCameraController movementController;
+
     Rigidbody heldRigidbody;
     IItem heldItem;
 
@@ -116,6 +119,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Use(bool interactFailed)//使う
     {
+        // 持っているアイテムを使用
         heldItem?.Use(this, interactFailed);
     }
 
@@ -451,6 +455,25 @@ public class PlayerScript : MonoBehaviour
                 30f
             ),
             "[E] インタラクト"
+        );
+    }
+
+    public void EnergyDrink(
+    float value,
+    float time)
+    {
+        if (movementController == null)
+        {
+            Debug.LogError(
+                "Movement Controllerが未設定です"
+            );
+
+            return;
+        }
+
+        movementController.ApplySpeedBoost(
+            value,
+            time
         );
     }
 }
