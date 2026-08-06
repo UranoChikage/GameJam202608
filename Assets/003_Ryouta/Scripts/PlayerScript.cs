@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
 
     Rigidbody heldRigidbody;
     IItem heldItem;
+    public IItem HeldItem => heldItem;
 
     [SerializeField]
     Vector3 holdOffset =
