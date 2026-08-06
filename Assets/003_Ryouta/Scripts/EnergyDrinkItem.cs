@@ -4,6 +4,9 @@ public class EnergyDrinkItem :
     MonoBehaviour,
     IItem
 {
+    [SerializeField, Min(0.01f)] private float speedMultiplier = 3f;
+    [SerializeField, Min(0.01f)] private float effectDuration = 10f;
+
     public void PickUp(PlayerScript player)
     {
         Debug.Log("エナジードリンクを拾いました");
@@ -18,7 +21,10 @@ public class EnergyDrinkItem :
 
         Debug.Log("エナジードリンクを使用しました");
 
-        player.EnergyDrink(3f, 10f);
+        player.EnergyDrink(speedMultiplier, effectDuration);
+
+        DamageVignetteEffect.TryPlayBoostEffect(effectDuration);
+
         Destroy(gameObject);
     }
 }
