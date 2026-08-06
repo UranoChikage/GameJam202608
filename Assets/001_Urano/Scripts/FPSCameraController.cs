@@ -109,8 +109,8 @@ public class FPSCameraController : MonoBehaviour
         cameraTransform.localRotation = dirController.GetPitchRotation();
     }
 
-    
-        private void Move()
+
+    private void Move()
     {
         float currentSpeed =
             isCrouching
@@ -127,8 +127,8 @@ public class FPSCameraController : MonoBehaviour
         velocity.z = targetVelocity.z;
 
         rb.linearVelocity = velocity;
-    
-}
+
+    }
 
     private void Rotate()
     {
@@ -199,4 +199,5 @@ public class FPSCameraController : MonoBehaviour
                 crouchSpeed * Time.deltaTime
             );
     }
+   
 }
