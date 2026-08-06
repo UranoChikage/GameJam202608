@@ -869,6 +869,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16
   jumpForce: 5
+  crouchHeight: 1
+  crouchMoveSpeed: 2.5
+  crouchCameraOffset: -0.5
+  crouchSpeed: 10
 --- !u!114 &593503243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,10 +886,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   playerCamera: {fileID: 364551036}
-  holdPosition: {fileID: 1238148809}
+  holdPositions:
+  - {fileID: 1238148809}
+  holdPositionIndex: 0
   pickUpDistance: 3
   rayDistance: 10
+  dropDistance: 1
+  dropHeight: 0.5
   holdOffset: {x: 0.4, y: -0.3, z: 0.8}
+  showInteractDebug: 1
 --- !u!143 &593503244
 CharacterController:
   m_ObjectHideFlags: 0

@@ -8,8 +8,11 @@ public class ball : MonoBehaviour, IItem
         rb= GetComponent<Rigidbody>();
     }
 
-    public void Use(PlayerScript player)
+    public void Use(PlayerScript player, bool interactFailed)
     {
+        // インタラクト失敗時（何もインタラクトできる物が無かった時）だけ投げる
+        if (!interactFailed) return;
+
         if (player)
         {
             PickUp(player);

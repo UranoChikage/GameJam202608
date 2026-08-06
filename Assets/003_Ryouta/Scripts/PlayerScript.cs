@@ -113,9 +113,9 @@ public class PlayerScript : MonoBehaviour
         return holdPositions[holdPositionIndex];
     }
 
-    public void Use()//使う
+    public void Use(bool interactFailed)//使う
     {
-        heldItem?.Use(this);
+        heldItem?.Use(this, interactFailed);
     }
 
     // 持っていれば落とす、持っていなければ拾う
@@ -303,6 +303,7 @@ public class PlayerScript : MonoBehaviour
                 );
 
                 interactable.Interact();
+                Use(false);
             }
             else
             {
@@ -310,6 +311,9 @@ public class PlayerScript : MonoBehaviour
                     hit.collider.name +
                     "にはIInteractableがありません"
                 );
+
+                // インタラクト失敗時、通すかどうかはItem側が判断する
+                Use(true);
             }
 
             // 当たった場合は緑色
