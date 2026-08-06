@@ -6,7 +6,7 @@ public class Savepoint : MonoBehaviour
     StartPoint point;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.TryGetComponent<DirController>(out _)) 
+        if (other.transform.TryGetComponent<PlayerScript>(out _)) 
         {
             point.transform.position = transform.position;
             MeshRenderer renderer = GetComponent<MeshRenderer>();

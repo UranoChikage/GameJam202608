@@ -25,6 +25,19 @@ public class PlayerScript : MonoBehaviour
 
     Collider[] heldColliders;
     public event Action<bool> OnDead;
+
+    /// <summary>死亡判定を発火し、直近のSavePoint（StartPoint）へリスポーンする</summary>
+    public void Die()
+    {
+        OnDead?.Invoke(true);
+
+        StartPoint startPoint = FindFirstObjectByType<StartPoint>();
+        if (startPoint != null)
+        {
+            startPoint.Respawn();
+        }
+    }
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();

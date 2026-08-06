@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class DebugRespawn : MonoBehaviour
 {
@@ -8,10 +8,10 @@ public class DebugRespawn : MonoBehaviour
     {
         if (Input.GetKeyDown(debugKillKey))
         {
-            StartPoint startPoint = FindFirstObjectByType<StartPoint>();
-            if (startPoint != null)
+            PlayerScript player = FindFirstObjectByType<PlayerScript>();
+            if (player != null)
             {
-                startPoint.Respawn();
+                player.Die();
             }
         }
     }
