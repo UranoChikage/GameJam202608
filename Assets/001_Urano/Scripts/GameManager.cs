@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -9,6 +10,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    [Header("シーン遷移演出")]
+    [SerializeField] private CanvasGroup fadeCanvas;
+    [SerializeField] private float fadeDuration = 0.5f;
 
     private bool isLoading;
 
@@ -34,7 +39,42 @@ public class GameManager : MonoBehaviour
         }
 
         isLoading = true;
+        StartCoroutine(LoadSceneRoutine(sceneName));
+    }
+
+    private IEnumerator LoadSceneRoutine(string sceneName)
+    {
+        yield return FadeOut();
+
         SceneManager.LoadScene(sceneName);
+    }
+
+    /// <summary>画面を暗転させる。死亡演出やシーン遷移演出から呼ぶ。</summary>
+    public Coroutine FadeOut()
+    {
+        return StartCoroutine(FadeCanvas(0f, 1f));
+    }
+
+    /// <summary>暗転から復帰する。</summary>
+    public Coroutine FadeIn()
+    {
+        return StartCoroutine(FadeCanvas(1f, 0f));
+    }
+
+    private IEnumerator FadeCanvas(float from, float to)
+    {
+        if (fadeCanvas == null)
+            yield break;
+
+        float timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeCanvas.alpha = Mathf.Lerp(from, to, timer / fadeDuration);
+            yield return null;
+        }
+
+        fadeCanvas.alpha = to;
     }
 
     private void OnEnable()
@@ -50,5 +90,6 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         isLoading = false;
+        FadeIn();
     }
 }
