@@ -14,6 +14,8 @@ using UnityEngine.Rendering.Universal;
 /// </summary>
 public sealed class DamageVignetteEffect : MonoBehaviour
 {
+    public static DamageVignetteEffect ActiveInstance { get; private set; }
+
     // ダメージ演出に使用するVolume。Inspectorから設定できる。
     [SerializeField] private Volume volume;
 
@@ -54,6 +56,8 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     // ゲーム開始時に一度だけ呼ばれる初期化処理。
     private void Awake()
     {
+        ActiveInstance = this;
+
         // InspectorでVolumeが設定されていなければ、同じGameObjectから探す。
         if (volume == null)
         {
@@ -117,10 +121,53 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         RestartEffect(FadeHealAtScreenEdge());
     }
 
+    /// <summary>現在のシーンに登録されたポストプロセスへヒールを通知する。</summary>
+    public static bool TryPlayHealEffect()
+    {
+        if (ActiveInstance == null)
+        {
+            ActiveInstance = FindFirstObjectByType<DamageVignetteEffect>();
+        }
+
+        if (ActiveInstance == null || !ActiveInstance.isActiveAndEnabled)
+        {
+            Debug.LogError("ヒール用のDamageVignetteEffectが有効なシーン内に見つかりません。");
+            return false;
+        }
+
+        ActiveInstance.PlayHealEffect();
+        return true;
+    }
+
     /// <summary>黄色のブースト演出を再生する。Bキーからも呼ばれる。</summary>
     public void PlayBoostEffect()
     {
-        RestartEffect(HoldBoostVignette());
+        PlayBoostEffect(boostDuration);
+    }
+
+    /// <summary>指定された効果時間だけ黄色のブースト演出を表示する。</summary>
+    public void PlayBoostEffect(float duration)
+    {
+        RestartEffect(HoldBoostVignette(Mathf.Max(0.01f, duration)));
+    }
+
+    /// <summary>現在のシーンに登録されたポストプロセスへブーストを通知する。</summary>
+    public static bool TryPlayBoostEffect(float duration)
+    {
+        // シーン読み込み順の都合で未登録なら、一度だけシーン内から探して補完する。
+        if (ActiveInstance == null)
+        {
+            ActiveInstance = FindFirstObjectByType<DamageVignetteEffect>();
+        }
+
+        if (ActiveInstance == null || !ActiveInstance.isActiveAndEnabled)
+        {
+            Debug.LogError("ブースト用のDamageVignetteEffectが有効なシーン内に見つかりません。");
+            return false;
+        }
+
+        ActiveInstance.PlayBoostEffect(duration);
+        return true;
     }
 
     private void PlayEffect(Color effectColor, float effectIntensity, float duration)
@@ -169,7 +216,7 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     }
 
     /// <summary>黄色のブースト表示を維持し、終了直前に滑らかに消す。</summary>
-    private IEnumerator HoldBoostVignette()
+    private IEnumerator HoldBoostVignette(float duration)
     {
         vignette.color.Override(boostColor);
 
@@ -177,11 +224,11 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         const float fadeInDuration = 0.2f;
         const float fadeOutDuration = 0.5f;
 
-        while (elapsed < boostDuration)
+        while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float fadeIn = Mathf.Clamp01(elapsed / fadeInDuration);
-            float fadeOut = Mathf.Clamp01((boostDuration - elapsed) / fadeOutDuration);
+            float fadeOut = Mathf.Clamp01((duration - elapsed) / fadeOutDuration);
             float visibility = Mathf.SmoothStep(0f, 1f, Mathf.Min(fadeIn, fadeOut));
 
             vignette.color.value = Color.Lerp(defaultColor, boostColor, visibility);
@@ -255,5 +302,13 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         vignette.color.value = defaultColor;
         vignette.intensity.value = defaultIntensity;
         vignette.smoothness.value = defaultSmoothness;
+    }
+
+    private void OnDestroy()
+    {
+        if (ActiveInstance == this)
+        {
+            ActiveInstance = null;
+        }
     }
 }
