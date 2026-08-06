@@ -23,6 +23,15 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     // 赤いVignetteが通常の状態へ戻るまでの秒数。
     [SerializeField, Min(0.01f)] private float fadeDuration = 0.4f;
 
+    [Header("ヒール・ブースト")]
+    [SerializeField] private Color healColor = new Color(0.1f, 1f, 0.25f, 1f);
+    [SerializeField, Range(0f, 1f)] private float healIntensity = 0.48f;
+    [SerializeField, Min(0.01f)] private float healDuration = 0.65f;
+
+    [SerializeField] private Color boostColor = new Color(1f, 0.85f, 0.05f, 1f);
+    [SerializeField, Range(0f, 1f)] private float boostIntensity = 0.58f;
+    [SerializeField, Min(0.01f)] private float boostDuration = 0.45f;
+
     [Header("黒い縁の鼓動")]
     // 1分間の心拍数。二連の脈動を1拍として扱う。
     [SerializeField, Min(1f)] private float pulseBpm = 72f;
@@ -77,6 +86,17 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         {
             PlayDamageEffect();
         }
+
+        // Hキーで緑のヒール演出、Bキーで黄色のブースト演出を確認できる。
+        if (Keyboard.current != null && Keyboard.current.hKey.wasPressedThisFrame)
+        {
+            PlayHealEffect();
+        }
+
+        if (Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame)
+        {
+            PlayBoostEffect();
+        }
     }
 
     /// <summary>
@@ -85,35 +105,51 @@ public sealed class DamageVignetteEffect : MonoBehaviour
     /// </summary>
     public void PlayDamageEffect()
     {
-        // すでに演出中なら一度止め、連続ダメージでも最初から光らせ直す。
+        PlayEffect(Color.red, damageIntensity, fadeDuration);
+    }
+
+    /// <summary>緑のヒール演出を再生する。Hキーからも呼ばれる。</summary>
+    public void PlayHealEffect()
+    {
+        PlayEffect(healColor, healIntensity, healDuration);
+    }
+
+    /// <summary>黄色のブースト演出を再生する。Bキーからも呼ばれる。</summary>
+    public void PlayBoostEffect()
+    {
+        PlayEffect(boostColor, boostIntensity, boostDuration);
+    }
+
+    private void PlayEffect(Color effectColor, float effectIntensity, float duration)
+    {
+        // すでに演出中なら止め、連続入力でも鮮明に光らせ直す。
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
         }
 
-        // 時間をかけて元へ戻すコルーチンを開始する。
-        fadeCoroutine = StartCoroutine(FadeDamageVignette());
+        fadeCoroutine = StartCoroutine(FadeVignette(effectColor, effectIntensity, duration));
     }
 
     /// <summary>
     /// Vignetteを赤くした後、fadeDuration秒かけて通常の状態へ戻す。
     /// </summary>
-    private IEnumerator FadeDamageVignette()
+    private IEnumerator FadeVignette(Color effectColor, float effectIntensity, float duration)
     {
-        // ダメージを受けた瞬間は、Vignetteを赤くして強くする。
-        vignette.color.Override(Color.red);
-        vignette.intensity.Override(damageIntensity);
+        vignette.color.Override(effectColor);
+        vignette.intensity.Override(effectIntensity);
 
         float elapsed = 0f;
-        while (elapsed < fadeDuration)
+        while (elapsed < duration)
         {
             // Time.unscaledDeltaTimeを使うため、ゲームを一時停止していても演出が進む。
             elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / fadeDuration);
+            float t = Mathf.Clamp01(elapsed / duration);
+            // 最初は少し粘り、後半で滑らかに消える。
+            float fadeT = t * t * (3f - 2f * t);
 
-            // Lerpで赤色を戻し、強さは鼓動中の黒い縁へ自然につなげる。
-            vignette.color.value = Color.Lerp(Color.red, defaultColor, t);
-            vignette.intensity.value = Mathf.Lerp(damageIntensity, GetPulseIntensity(), t);
+            vignette.color.value = Color.Lerp(effectColor, defaultColor, fadeT);
+            vignette.intensity.value = Mathf.Lerp(effectIntensity, GetPulseIntensity(), fadeT);
 
             // 次のフレームまで待つ。
             yield return null;
