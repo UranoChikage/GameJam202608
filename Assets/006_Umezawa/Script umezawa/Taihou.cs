@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 
-public interface Taihou
+public class Taihou : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float pow;
+    public GameObject prefab;
+    Vector3 Scale = new Vector3(0.1f, 0.1f, 0.1f);  
+    public void Interact()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("大砲発射");
+        //Gameobjectを生成する
+        GameObject instantiatedPrefab = Instantiate(prefab, transform.position, transform.rotation);
+        //そのゲームオブジェクトのスケールを変える
+        instantiatedPrefab.transform.localScale = Scale;
+        //RigidBodyを持たす
+        Rigidbody rb = instantiatedPrefab.AddComponent<Rigidbody>();
+        //そのRigidBodyに👇のように力を与え 
+        rb.AddForce(transform.forward * pow, ForceMode.Impulse);
     }
 }
