@@ -21,6 +21,6 @@ public class ball : MonoBehaviour, IItem
     
     public void PickUp(PlayerScript player)
     {
-        //後でプレイヤーがなんかする
+        Debug.Log("ボールを拾った");
     }
 }

@@ -138,19 +138,28 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
+        // タグ判定はIItem判定に統一（アイテム固有の反応をIItem.PickUpに任せられるようにするため）
         // ColliderまたはRigidbody本体のどちらかがItemなら拾う
-        bool isItem =
-            hit.collider.CompareTag("Item") ||
-            itemRigidbody.CompareTag("Item");
+        // bool isItem =
+        //     hit.collider.CompareTag("Item") ||
+        //     itemRigidbody.CompareTag("Item");
+        //
+        // if (!isItem)
+        // {
+        //     Debug.Log("Itemタグがありません");
+        //     return;
+        // }
 
-        if (!isItem)
+        IItem item = itemRigidbody.GetComponent<IItem>();
+
+        if (item == null)
         {
-            Debug.Log("Itemタグがありません");
+            Debug.Log("IItemを実装していません");
             return;
         }
 
         heldRigidbody = itemRigidbody;
-        heldItem = itemRigidbody.GetComponent<IItem>();
+        heldItem = item;
 
         heldRigidbody.useGravity = false;
         heldRigidbody.isKinematic = true;
@@ -163,6 +172,8 @@ public class PlayerScript : MonoBehaviour
         {
             itemCollider.enabled = false;
         }
+
+        heldItem.PickUp(this);
     }
     void Drop()
     {
