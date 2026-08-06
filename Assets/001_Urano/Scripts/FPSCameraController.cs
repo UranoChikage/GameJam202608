@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FPSCameraController : MonoBehaviour
 {
@@ -18,6 +19,18 @@ public class FPSCameraController : MonoBehaviour
     [Header("ジャンプ")]
     [SerializeField] private float jumpForce = 5f;
 
+    [Header("しゃがみ")]
+    [SerializeField] private float crouchHeight = 1f;
+    [SerializeField] private float crouchMoveSpeed = 2.5f;
+    [SerializeField] private float crouchCameraOffset = -0.5f;
+    [SerializeField] private float crouchSpeed = 10f;
+
+    private CapsuleCollider capsuleCollider;
+    private float standingHeight;
+    private Vector3 standingCenter;
+    private Vector3 standingCameraPosition;
+    private bool isCrouching;
+
     private Rigidbody rb;
     private Vector3 moveInput;
     private bool isGrounded;
@@ -26,7 +39,19 @@ public class FPSCameraController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // 物理で勝手に転がらないようにする
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
+        rb.freezeRotation = true;
+
+        // 立っている状態を保存
+        standingHeight = capsuleCollider.height;
+        standingCenter = capsuleCollider.center;
+
+        if (cameraTransform != null)
+        {
+            standingCameraPosition =
+                cameraTransform.localPosition;
+        }
     }
 
     private void Start()
@@ -57,6 +82,11 @@ public class FPSCameraController : MonoBehaviour
             jumpRequested = true;
             Debug.Log("aaaaaaa");
         }
+        if (Keyboard.current != null)
+        {
+            isCrouching =
+                Keyboard.current.leftCtrlKey.isPressed;
+        }
     }
 
     private void FixedUpdate()
@@ -64,11 +94,13 @@ public class FPSCameraController : MonoBehaviour
         Move();
         Rotate();
         Jump();
+        ApplyCrouchCollider();
     }
 
     private void LateUpdate()
     {
         ApplyPitch();
+        ApplyCrouchCamera();
     }
 
     private void ApplyPitch()
@@ -77,15 +109,26 @@ public class FPSCameraController : MonoBehaviour
         cameraTransform.localRotation = dirController.GetPitchRotation();
     }
 
-    private void Move()
+    
+        private void Move()
     {
-        Vector3 targetVelocity = moveInput * moveSpeed;
+        float currentSpeed =
+            isCrouching
+                ? crouchMoveSpeed
+                : moveSpeed;
+
+        Vector3 targetVelocity =
+            moveInput * currentSpeed;
         // Y方向(重力・ジャンプ)の速度は既存のrb.velocityを維持してXZだけ上書きする
+
         Vector3 velocity = rb.linearVelocity;
+
         velocity.x = targetVelocity.x;
         velocity.z = targetVelocity.z;
+
         rb.linearVelocity = velocity;
-    }
+    
+}
 
     private void Rotate()
     {
@@ -108,5 +151,52 @@ public class FPSCameraController : MonoBehaviour
         if (groundCheck == null) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+    }
+    private void ApplyCrouchCollider()
+    {
+        float targetHeight =
+            isCrouching
+                ? crouchHeight
+                : standingHeight;
+
+        capsuleCollider.height = Mathf.Lerp(
+            capsuleCollider.height,
+            targetHeight,
+            crouchSpeed * Time.fixedDeltaTime
+        );
+
+        // Colliderの下端が動かないようにする
+        float standingBottom =
+            standingCenter.y -
+            standingHeight / 2f;
+
+        Vector3 center = standingCenter;
+
+        center.y =
+            standingBottom +
+            capsuleCollider.height / 2f;
+
+        capsuleCollider.center = center;
+    }
+
+    private void ApplyCrouchCamera()
+    {
+        if (cameraTransform == null)
+            return;
+
+        Vector3 targetPosition =
+            standingCameraPosition;
+
+        if (isCrouching)
+        {
+            targetPosition.y += crouchCameraOffset;
+        }
+
+        cameraTransform.localPosition =
+            Vector3.Lerp(
+                cameraTransform.localPosition,
+                targetPosition,
+                crouchSpeed * Time.deltaTime
+            );
     }
 }

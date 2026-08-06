@@ -11,10 +11,15 @@ public class PlayerScript : MonoBehaviour
     float verticalVelocity;
 
 
-    [SerializeField] Transform holdPosition;
+    [SerializeField] Transform[] holdPositions;
+
+    // 使用する番号。0が最初
+    [SerializeField] int holdPositionIndex = 0;
     [SerializeField] float pickUpDistance = 3f;
 
     [SerializeField] float rayDistance = 3f;
+    [SerializeField] float dropDistance = 1f;
+    [SerializeField] float dropHeight = 0.5f;
 
     Rigidbody heldRigidbody;
     IItem heldItem;
@@ -25,6 +30,10 @@ public class PlayerScript : MonoBehaviour
 
     Collider[] heldColliders;
     public event Action<bool> OnDead;
+    [SerializeField] bool showInteractDebug = true;
+
+    IInteractable currentInteractable;
+    RaycastHit currentInteractHit;
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -32,38 +41,63 @@ public class PlayerScript : MonoBehaviour
       
     }
 
+  
     public void Update()
     {
-    
-
         Move();
-        if (Keyboard.current.eKey.isPressed) { Use(); }
+
+        CheckInteractable();
 
         if (Keyboard.current != null &&
-    Keyboard.current.fKey.wasPressedThisFrame)//押した瞬間だけ
+    Keyboard.current.eKey.wasPressedThisFrame)
         {
-            DropOrPickUp();
-            
-            Debug.Log("Fキーを押しました");
-            
+            Interact();
         }
 
+        if (Keyboard.current != null &&
+            Keyboard.current.fKey.wasPressedThisFrame)
+        {
+            DropOrPickUp();
+            Debug.Log("Fキーを押しました");
+        }
     }
 
     public void Move()
     {
-    
-
         if (controller.isGrounded)
         {
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
         }
-
     }
 
- 
+    private Transform GetHoldPosition()
+    {
+        if (holdPositions == null ||
+            holdPositions.Length == 0)
+        {
+            Debug.LogError(
+                "HoldPositionが登録されていません",
+                this
+            );
+
+            return null;
+        }
+
+        if (holdPositionIndex < 0 ||
+            holdPositionIndex >= holdPositions.Length)
+        {
+            Debug.LogError(
+                "Hold Position Indexが範囲外です",
+                this
+            );
+
+            return null;
+        }
+
+        return holdPositions[holdPositionIndex];
+    }
 
     public void Use()//使う
     {
@@ -87,11 +121,16 @@ public class PlayerScript : MonoBehaviour
 
     void PickUp()
     {
-        if (playerCamera == null || holdPosition == null)
+        Transform holdPosition = GetHoldPosition();
+
+        if (playerCamera == null ||
+            holdPosition == null)
         {
             Debug.LogError(
-                "PlayerCameraかHoldPositionが未設定です"
+                "PlayerCameraかHoldPositionが未設定です",
+                this
             );
+
             return;
         }
 
@@ -108,7 +147,10 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
-        Debug.Log("Rayが当たった：" + hit.collider.name);
+        Debug.Log(
+            "Rayが当たった物：" +
+            hit.collider.name
+        );
 
         Rigidbody itemRigidbody =
             hit.collider.attachedRigidbody;
@@ -125,7 +167,6 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
-        // ColliderまたはRigidbody本体のどちらかがItemなら拾う
         bool isItem =
             hit.collider.CompareTag("Item") ||
             itemRigidbody.CompareTag("Item");
@@ -137,12 +178,13 @@ public class PlayerScript : MonoBehaviour
         }
 
         heldRigidbody = itemRigidbody;
-        heldItem = itemRigidbody.GetComponent<IItem>();
+
+        heldItem =
+            hit.collider.GetComponentInParent<IItem>();
 
         heldRigidbody.useGravity = false;
         heldRigidbody.isKinematic = true;
 
-        // 持っている間はColliderを無効にする
         heldColliders =
             heldRigidbody.GetComponentsInChildren<Collider>();
 
@@ -151,20 +193,44 @@ public class PlayerScript : MonoBehaviour
             itemCollider.enabled = false;
         }
     }
+
     void Drop()
     {
         if (heldRigidbody == null)
             return;
 
-        // プレイヤーの少し前へ移動
-        heldRigidbody.transform.position =
-            playerCamera.position +
-            playerCamera.forward * 2f;
+        // カメラの向きから上下方向を除く
+        Vector3 flatForward = Vector3.ProjectOnPlane(
+            playerCamera.forward,
+            Vector3.up
+        ).normalized;
+
+        // 真上・真下を向いたときの対策
+        if (flatForward.sqrMagnitude < 0.01f)
+        {
+            flatForward = transform.forward;
+        }
+
+        // プレイヤーの前方かつ少し上へ配置
+        Vector3 dropPosition =
+            transform.position +
+            flatForward * dropDistance +
+            Vector3.up * dropHeight;
+
+        heldRigidbody.position = dropPosition;
+
+        // 勝手に飛ばないよう速度をリセット
+        heldRigidbody.linearVelocity = Vector3.zero;
+        heldRigidbody.angularVelocity = Vector3.zero;
 
         heldRigidbody.isKinematic = false;
         heldRigidbody.useGravity = true;
 
-        // Colliderを戻す
+        // 高速移動による床抜け対策
+        heldRigidbody.collisionDetectionMode =
+            CollisionDetectionMode.ContinuousDynamic;
+
+        // Colliderを最後に戻す
         if (heldColliders != null)
         {
             foreach (Collider itemCollider in heldColliders)
@@ -176,54 +242,183 @@ public class PlayerScript : MonoBehaviour
         heldRigidbody = null;
         heldItem = null;
         heldColliders = null;
-
         Debug.Log("アイテムを落としました");
     }
     public void Interact()
     {
-        Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, rayDistance);
-        if (GetComponent<IInteractable>() != null)
+        if (playerCamera == null)
         {
+            Debug.LogError(
+                "Player Cameraが設定されていません"
+            );
 
+            return;
+        }
+
+        Debug.Log("インタラクト処理を開始しました");
+
+        if (Physics.Raycast(
+            playerCamera.position,
+            playerCamera.forward,
+            out RaycastHit hit,
+            rayDistance))
+        {
+            Debug.Log(
+                "Rayが当たった物：" +
+                hit.collider.name
+            );
+
+            IInteractable interactable =
+                hit.collider.GetComponentInParent<IInteractable>();
+
+            if (interactable != null)
+            {
+                Debug.Log(
+                    hit.collider.name +
+                    "をインタラクトします"
+                );
+
+                interactable.Interact();
+            }
+            else
+            {
+                Debug.LogWarning(
+                    hit.collider.name +
+                    "にはIInteractableがありません"
+                );
+            }
+
+            // 当たった場合は緑色
+            Debug.DrawRay(
+                playerCamera.position,
+                playerCamera.forward * hit.distance,
+                Color.green,
+                1f
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "Rayが何にも当たりませんでした"
+            );
+
+            // 当たらなかった場合は赤色
+            Debug.DrawRay(
+                playerCamera.position,
+                playerCamera.forward * rayDistance,
+                Color.red,
+                1f
+            );
         }
     }
+
+
     void OnDrawGizmosSelected()
     {
         if (playerCamera != null)
         {
             Gizmos.color = Color.red;
+
             Gizmos.DrawRay(
                 playerCamera.position,
                 playerCamera.forward * rayDistance
             );
         }
 
-        if (holdPosition != null)
+        if (holdPositions == null)
+            return;
+
+        for (int i = 0; i < holdPositions.Length; i++)
         {
-            Gizmos.color = Color.cyan;
+            if (holdPositions[i] == null)
+                continue;
+
+            Gizmos.color =
+                i == holdPositionIndex
+                    ? Color.green
+                    : Color.cyan;
+
             Gizmos.DrawSphere(
-                holdPosition.position,
+                holdPositions[i].position,
                 0.05f
             );
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if (heldRigidbody == null ||
-            playerCamera == null)
+        if (heldRigidbody == null)
+            return;
+
+        Transform holdPosition = GetHoldPosition();
+
+        if (holdPosition == null)
+            return;
+
+        heldRigidbody.transform.SetPositionAndRotation(
+            holdPosition.position,
+            holdPosition.rotation
+        );
+    }
+    
+    private void CheckInteractable()
+    {
+        currentInteractable = null;
+
+        if (playerCamera == null)
+            return;
+
+        bool isHit = Physics.Raycast(
+            playerCamera.position,
+            playerCamera.forward,
+            out currentInteractHit,
+            rayDistance
+        );
+
+        if (!isHit)
         {
+            // 何にも当たっていない
+            Debug.DrawRay(
+                playerCamera.position,
+                playerCamera.forward * rayDistance,
+                Color.yellow
+            );
+
             return;
         }
 
-        // カメラから見て右・下・前の位置
-        Vector3 targetPosition =
-            playerCamera.TransformPoint(holdOffset);
+        currentInteractable =
+            currentInteractHit.collider
+                .GetComponentInParent<IInteractable>();
 
-        heldRigidbody.transform.position =
-            targetPosition;
+        // インタラクト可能なら緑、不可能なら赤
+        Color rayColor =
+            currentInteractable != null
+                ? Color.green
+                : Color.red;
 
-        heldRigidbody.transform.rotation =
-            playerCamera.rotation;
+        Debug.DrawRay(
+            playerCamera.position,
+            playerCamera.forward * rayDistance,
+            rayColor
+        );
+    }
+    private void OnGUI()
+    {
+        if (!showInteractDebug)
+            return;
+
+        if (currentInteractable == null)
+            return;
+
+        GUI.Label(
+            new Rect(
+                Screen.width / 2f - 75f,
+                Screen.height / 2f + 30f,
+                150f,
+                30f
+            ),
+            "[E] インタラクト"
+        );
     }
 }
