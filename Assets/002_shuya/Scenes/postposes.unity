@@ -141,15 +141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.41956
+      value: 0.84553945
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.41956
+      value: 0.84553945
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.41956
+      value: 0.84553945
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -690,6 +690,13 @@ MonoBehaviour:
   volume: {fileID: 1946203411}
   damageIntensity: 0.55
   fadeDuration: 0.4
+  healColor: {r: 0.1, g: 1, b: 0.25, a: 1}
+  healIntensity: 0.3
+  healDuration: 0.65
+  healSmoothness: 0.18
+  boostColor: {r: 1, g: 0.85, b: 0.05, a: 1}
+  boostIntensity: 0.58
+  boostDuration: 0.45
   pulseBpm: 11.8
   pulseStrength: 0.007
 --- !u!1 &2058134020
