@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Moves a platform back and forth from its starting position.
@@ -35,6 +35,10 @@ public class MovingPlatform : MonoBehaviour
         if (platformRigidbody != null)
         {
             platformRigidbody.isKinematic = true;
+
+            // FixedUpdate間の動きを補間
+            platformRigidbody.interpolation =
+                RigidbodyInterpolation.Interpolate;
         }
     }
 
@@ -45,13 +49,25 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
 
-        movementProgress += speed * Time.fixedDeltaTime;
-        float offset = Mathf.PingPong(movementProgress + moveDistance, moveDistance * 2f) - moveDistance;
-        Vector3 targetPosition = startPosition + movementAxis * offset;
+        // speedを最大移動速度として位相を進める
+        movementProgress +=
+            speed / moveDistance *
+            Time.fixedDeltaTime;
+
+        // 端で減速して滑らかに折り返す
+        float offset =
+            Mathf.Sin(movementProgress) *
+            moveDistance;
+
+        Vector3 targetPosition =
+            startPosition +
+            movementAxis * offset;
 
         if (platformRigidbody != null)
         {
-            platformRigidbody.MovePosition(targetPosition);
+            platformRigidbody.MovePosition(
+                targetPosition
+            );
         }
         else
         {
