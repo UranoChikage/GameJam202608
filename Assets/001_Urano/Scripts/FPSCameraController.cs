@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class FPSCameraController : MonoBehaviour
 {
     [Header("参照")]
@@ -22,25 +24,32 @@ public class FPSCameraController : MonoBehaviour
 
     [Header("しゃがみ")]
     [SerializeField] private float crouchHeight = 1f;
+    [SerializeField] private float crouchSpeed = 8f;
     [SerializeField] private float crouchMoveSpeed = 2.5f;
     [SerializeField] private float crouchCameraOffset = -0.5f;
-    [SerializeField] private float crouchSpeed = 10f;
 
-    private CapsuleCollider capsuleCollider;
-    private float standingHeight;
-    private Vector3 standingCenter;
-    private Vector3 standingCameraPosition;
-    private bool isCrouching;
+    [Header("見た目")]
+    [SerializeField] private Transform bodyVisual;
+    [SerializeField] private float crouchBodyScaleY = 0.5f;
 
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
+
     private Vector3 moveInput;
     private bool isGrounded;
     private bool jumpRequested;
+    private bool isCrouching;
+
+    private float standingHeight;
+    private Vector3 standingCenter;
+    private Vector3 standingCameraPosition;
+    private Vector3 standingBodyScale;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
+        capsuleCollider =
+            GetComponent<CapsuleCollider>();
 
         rb.freezeRotation = true;
 
@@ -52,6 +61,12 @@ public class FPSCameraController : MonoBehaviour
         {
             standingCameraPosition =
                 cameraTransform.localPosition;
+        }
+
+        if (bodyVisual != null)
+        {
+            standingBodyScale =
+                bodyVisual.localScale;
         }
     }
 
@@ -65,51 +80,71 @@ public class FPSCameraController : MonoBehaviour
 
     private void Update()
     {
-        if (dirController == null) return;
+        if (dirController == null)
+            return;
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        Keyboard keyboard = Keyboard.current;
 
-        // DirControllerのYaw基準で移動方向を計算（水平面のみ）
-        Vector3 dir = dirController.GetFlatForward() * v + dirController.GetFlatRight() * h;
-        moveInput = Vector3.ClampMagnitude(dir, 1f);
+        if (keyboard == null)
+            return;
+
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (keyboard.aKey.isPressed)
+            horizontal -= 1f;
+
+        if (keyboard.dKey.isPressed)
+            horizontal += 1f;
+
+        if (keyboard.sKey.isPressed)
+            vertical -= 1f;
+
+        if (keyboard.wKey.isPressed)
+            vertical += 1f;
+
+        Vector3 direction =
+            dirController.GetFlatForward() * vertical +
+            dirController.GetFlatRight() * horizontal;
+
+        moveInput =
+            Vector3.ClampMagnitude(direction, 1f);
 
         // 接地判定
-        isGrounded = groundCheck != null &&
-            Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
-        //Debug.Log(isGrounded);
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        isGrounded =
+            groundCheck != null &&
+            Physics.CheckSphere(
+                groundCheck.position,
+                groundCheckRadius,
+                groundMask
+            );
+
+        // ジャンプ
+        if (isGrounded &&
+            keyboard.spaceKey.wasPressedThisFrame)
         {
             jumpRequested = true;
-            Debug.Log("aaaaaaa");
         }
-        if (Keyboard.current != null)
-        {
-            isCrouching =
-                Keyboard.current.leftCtrlKey.isPressed;
-        }
+
+        // 左Ctrlを押している間しゃがむ
+        isCrouching =
+            keyboard.leftCtrlKey.isPressed;
     }
 
     private void FixedUpdate()
     {
+        ApplyCrouchCollider();
         Move();
         Rotate();
         Jump();
-        ApplyCrouchCollider();
     }
 
     private void LateUpdate()
     {
         ApplyPitch();
         ApplyCrouchCamera();
+        ApplyCrouchVisual();
     }
-
-    private void ApplyPitch()
-    {
-        if (cameraTransform == null || dirController == null) return;
-        cameraTransform.localRotation = dirController.GetPitchRotation();
-    }
-
 
     private void Move()
     {
@@ -120,7 +155,6 @@ public class FPSCameraController : MonoBehaviour
 
         Vector3 targetVelocity =
             moveInput * currentSpeed;
-        // Y方向(重力・ジャンプ)の速度は既存のrb.velocityを維持してXZだけ上書きする
 
         Vector3 velocity = rb.linearVelocity;
 
@@ -128,18 +162,26 @@ public class FPSCameraController : MonoBehaviour
         velocity.z = targetVelocity.z;
 
         rb.linearVelocity = velocity;
-
     }
 
     private void Rotate()
     {
-        if (!rotateBodyWithYaw || dirController == null) return;
-        rb.MoveRotation(dirController.GetYawRotation());
+        if (!rotateBodyWithYaw ||
+            dirController == null)
+        {
+            return;
+        }
+
+        rb.MoveRotation(
+            dirController.GetYawRotation()
+        );
     }
 
     private void Jump()
     {
-        if (!jumpRequested) return;
+        if (!jumpRequested)
+            return;
+
         jumpRequested = false;
 
         Vector3 velocity = rb.linearVelocity;
@@ -147,12 +189,18 @@ public class FPSCameraController : MonoBehaviour
         rb.linearVelocity = velocity;
     }
 
-    private void OnDrawGizmosSelected()
+    private void ApplyPitch()
     {
-        if (groundCheck == null) return;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        if (cameraTransform == null ||
+            dirController == null)
+        {
+            return;
+        }
+
+        cameraTransform.localRotation =
+            dirController.GetPitchRotation();
     }
+
     private void ApplyCrouchCollider()
     {
         float targetHeight =
@@ -166,7 +214,7 @@ public class FPSCameraController : MonoBehaviour
             crouchSpeed * Time.fixedDeltaTime
         );
 
-        // Colliderの下端が動かないようにする
+        // 足元の位置を維持
         float standingBottom =
             standingCenter.y -
             standingHeight / 2f;
@@ -190,7 +238,8 @@ public class FPSCameraController : MonoBehaviour
 
         if (isCrouching)
         {
-            targetPosition.y += crouchCameraOffset;
+            targetPosition.y +=
+                crouchCameraOffset;
         }
 
         cameraTransform.localPosition =
@@ -200,9 +249,32 @@ public class FPSCameraController : MonoBehaviour
                 crouchSpeed * Time.deltaTime
             );
     }
+
+    private void ApplyCrouchVisual()
+    {
+        if (bodyVisual == null)
+            return;
+
+        Vector3 targetScale =
+            standingBodyScale;
+
+        if (isCrouching)
+        {
+            targetScale.y *=
+                crouchBodyScaleY;
+        }
+
+        bodyVisual.localScale =
+            Vector3.Lerp(
+                bodyVisual.localScale,
+                targetScale,
+                crouchSpeed * Time.deltaTime
+            );
+    }
+
     public void ApplySpeedBoost(
-     float value,
-     float time)
+        float value,
+        float time)
     {
         StartCoroutine(
             SpeedBoostCoroutine(value, time)
@@ -225,5 +297,18 @@ public class FPSCameraController : MonoBehaviour
         moveSpeed -= value;
 
         Debug.Log("速度アップが終了しました");
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null)
+            return;
+
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(
+            groundCheck.position,
+            groundCheckRadius
+        );
     }
 }
