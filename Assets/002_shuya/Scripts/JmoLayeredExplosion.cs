@@ -15,7 +15,7 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
 
     [Header("Composition")]
     [SerializeField, Min(0.05f)] private float effectScale = 0.55f;
-    [SerializeField, Min(0f)] private float smokeDelay = 0.08f;
+    [SerializeField, Min(0f)] private float smokeDelay = 0.035f;
 
     [Header("Impact")]
     [SerializeField] private bool useCameraShake = true;
@@ -35,8 +35,9 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
         lightObject.transform.SetParent(transform, false);
         explosionLight = lightObject.GetComponent<Light>();
         explosionLight.type = LightType.Point;
-        explosionLight.color = new Color(1f, 0.32f, 0.04f);
-        explosionLight.range = 12f * effectScale;
+        // 赤橙色ではなく、黄白色の爆発光にする。
+        explosionLight.color = new Color(1f, 0.72f, 0.18f);
+        explosionLight.range = 2f * effectScale;
         explosionLight.intensity = 0f;
         explosionLight.shadows = LightShadows.None;
     }
@@ -62,7 +63,9 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
     public void PlayExplosion()
     {
         // 最初の爆発はこの火球1回だけにする。
-        SpawnEffect(fireballPrefab, 1.15f, Vector3.zero);
+        GameObject fireball = SpawnEffect(fireballPrefab, 0.2f, Vector3.zero);
+        SetParticleSpeed(fireball, 1.6f);
+        StartFireballAtPeak(fireball, 0.1f);
 
         // 強い光と画面振動で、爆発の重さを補強する。
         StartCoroutine(FlashExplosionLight());
@@ -83,13 +86,13 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
         // 星形に広がる煙で爆風の方向性を出す。
         SpawnEffect(starSmokePrefab, 1.25f, new Vector3(0f, 0.08f, 0f));
 
-        yield return new WaitForSecondsRealtime(0.05f);
+        yield return new WaitForSecondsRealtime(0.02f);
 
         // 最後に大きい煙を残し、爆発後の余韻を作る。
         SpawnEffect(lingeringSmokePrefab, 1f, new Vector3(0f, 0.25f, 0f));
 
         // 上方にもう一層の煙を置き、参考画像のような縦長の黒煙を残す。
-        yield return new WaitForSecondsRealtime(0.14f);
+        yield return new WaitForSecondsRealtime(0.08f);
         SpawnEffect(lingeringSmokePrefab, 0.72f, new Vector3(0.05f, 0.9f, 0.02f));
         playCoroutine = null;
     }
@@ -98,13 +101,13 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
     {
         const float flashDuration = 0.16f;
         float elapsed = 0f;
-        explosionLight.intensity = 14f;
+        explosionLight.intensity = 4f;
 
         while (elapsed < flashDuration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / flashDuration);
-            explosionLight.intensity = Mathf.Lerp(14f, 0f, t * t);
+            explosionLight.intensity = Mathf.Lerp(4f, 0f, t * t);
             yield return null;
         }
 
@@ -128,11 +131,11 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
         cameraTransform.localPosition = originalLocalPosition;
     }
 
-    private void SpawnEffect(GameObject prefab, float layerScale, Vector3 localOffset)
+    private GameObject SpawnEffect(GameObject prefab, float layerScale, Vector3 localOffset)
     {
         if (prefab == null)
         {
-            return;
+            return null;
         }
 
         GameObject effect = Instantiate(prefab, transform.position, transform.rotation);
@@ -140,10 +143,100 @@ public sealed class JmoLayeredExplosion : MonoBehaviour
         effect.transform.position += transform.TransformVector(localOffset * effectScale);
         effect.transform.localScale = Vector3.one * effectScale * layerScale;
 
+        // JMOの赤みが強いParticleを、明るさを保ったまま黄白色へ寄せる。
+        foreach (ParticleSystem particles in effect.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            ParticleSystem.MainModule main = particles.main;
+            main.startColor = ReduceRedTint(main.startColor);
+        }
+
         // 毎回わずかに向きを変え、同じ爆発が繰り返されて見えるのを防ぐ。
         effect.transform.Rotate(Vector3.forward, Random.Range(0f, 360f), Space.Self);
 
         // Asset側の自動破棄に加え、安全のため一定時間後にも削除する。
         Destroy(effect, 8f);
+        return effect;
+    }
+
+    private static void SetParticleSpeed(GameObject effect, float speed)
+    {
+        if (effect == null)
+        {
+            return;
+        }
+
+        // 最初の火球に含まれるParticleだけを速くし、表示時間を短縮する。
+        foreach (ParticleSystem particles in effect.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            ParticleSystem.MainModule main = particles.main;
+            main.simulationSpeed = speed;
+        }
+    }
+
+    private static void StartFireballAtPeak(GameObject effect, float peakTime)
+    {
+        if (effect == null)
+        {
+            return;
+        }
+
+        // 生成直後の小さい状態を飛ばし、光と炎が最大に近い瞬間から表示する。
+        foreach (ParticleSystem particles in effect.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            particles.Simulate(peakTime, false, true, true);
+            particles.Play(false);
+        }
+    }
+
+    private static ParticleSystem.MinMaxGradient ReduceRedTint(
+        ParticleSystem.MinMaxGradient source)
+    {
+        switch (source.mode)
+        {
+            case ParticleSystemGradientMode.Color:
+                return new ParticleSystem.MinMaxGradient(ToWarmWhite(source.color));
+
+            case ParticleSystemGradientMode.TwoColors:
+                return new ParticleSystem.MinMaxGradient(
+                    ToWarmWhite(source.colorMin),
+                    ToWarmWhite(source.colorMax));
+
+            case ParticleSystemGradientMode.Gradient:
+            case ParticleSystemGradientMode.RandomColor:
+                return new ParticleSystem.MinMaxGradient(ToWarmWhite(source.gradient));
+
+            case ParticleSystemGradientMode.TwoGradients:
+                return new ParticleSystem.MinMaxGradient(
+                    ToWarmWhite(source.gradientMin),
+                    ToWarmWhite(source.gradientMax));
+
+            default:
+                return source;
+        }
+    }
+
+    private static Color ToWarmWhite(Color color)
+    {
+        // 赤が緑より強い部分だけ補正し、煙のグレーなどはほぼ維持する。
+        if (color.r > color.g)
+        {
+            color.g = Mathf.Lerp(color.g, color.r, 0.58f);
+            color.b = Mathf.Lerp(color.b, color.g, 0.22f);
+        }
+        return color;
+    }
+
+    private static Gradient ToWarmWhite(Gradient source)
+    {
+        GradientColorKey[] colorKeys = source.colorKeys;
+        for (int i = 0; i < colorKeys.Length; i++)
+        {
+            colorKeys[i].color = ToWarmWhite(colorKeys[i].color);
+        }
+
+        Gradient result = new Gradient();
+        result.mode = source.mode;
+        result.SetKeys(colorKeys, source.alphaKeys);
+        return result;
     }
 }
