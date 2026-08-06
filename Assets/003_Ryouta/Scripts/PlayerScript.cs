@@ -1,168 +1,229 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
-   
-    [SerializeField] float moveSpeed = 5f;//移動速度
-    [SerializeField] float jumpHeight = 1.5f;//ジャンプの高さ
-    [SerializeField] float gravity = -20f;//重力の強さ
-
     //視点
-     Transform playerCamera;//動かすカメラ
-    [SerializeField, Range(0.01f, 1f)]
-    float CameraSpeed = 0.1f;//カメラの感度
-     float lookLimit = 90f;//カメラの限界角度
-
+    [SerializeField] Transform playerCamera;//動かすカメラ
+   
     CharacterController controller;
     float verticalVelocity;
-    float cameraPitch;
-    bool cursorLocked = true;
 
+
+    [SerializeField] Transform holdPosition;
+    [SerializeField] float pickUpDistance = 3f;
+
+    [SerializeField] float rayDistance = 3f;
+
+    Rigidbody heldRigidbody;
+    IItem heldItem;
+
+    [SerializeField]
+    Vector3 holdOffset =
+    new Vector3(0.4f, -0.3f, 0.8f);
+
+    Collider[] heldColliders;
+    public event Action<bool> OnDead;
     void Awake()
     {
         controller = GetComponent<CharacterController>();
 
-        if (playerCamera == null)
-            playerCamera = GetComponentInChildren<Camera>()?.transform;
-
-        if (playerCamera == null)
-        {
-            Debug.LogError(
-                "Playerの子にCameraがありません。",
-                this
-            );
-
-            enabled = false;
-            return;
-        }
-
-        LockCursor();
+      
     }
 
     public void Update()
     {
-        HandleCursor();
-
-        if (cursorLocked)
-            Look();
+    
 
         Move();
+        if (Keyboard.current.eKey.isPressed) { Use(); }
+
+        if (Keyboard.current != null &&
+    Keyboard.current.fKey.wasPressedThisFrame)//押した瞬間だけ
+        {
+            DropOrPickUp();
+            
+            Debug.Log("Fキーを押しました");
+            
+        }
+
     }
 
     public void Move()
     {
-        if (Keyboard.current == null)
-            return;
-
-        Vector2 input = Vector2.zero;
-
-        if (Keyboard.current.wKey.isPressed)
-            input.y += 1f;//前移動
-
-        if (Keyboard.current.sKey.isPressed)
-            input.y -= 1f;//後ろ移動
-
-        if (Keyboard.current.dKey.isPressed)
-            input.x += 1f;//右移動
-
-        if (Keyboard.current.aKey.isPressed)
-            input.x -= 1f;//左移動
-
-        // 斜め移動が速くなることを防ぐ
-        input = Vector2.ClampMagnitude(input, 1f);
-
-        Vector3 direction =
-            transform.right * input.x +
-            transform.forward * input.y;
+    
 
         if (controller.isGrounded)
         {
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                verticalVelocity =
-                    Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
         }
 
-        verticalVelocity += gravity * Time.deltaTime;
-
-        Vector3 velocity = direction * moveSpeed;
-        velocity.y = verticalVelocity;
-
-        controller.Move(velocity * Time.deltaTime);
     }
 
-   public void Look()
-    {
-        if (Mouse.current == null)
-            return;
-
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-
-        float mouseX = mouseDelta.x * CameraSpeed;
-        float mouseY = mouseDelta.y * CameraSpeed;
-
-        // 左右はPlayer全体を回す
-        transform.Rotate(Vector3.up * mouseX);
-
-        // 上下はカメラだけを回す
-        cameraPitch -= mouseY;
-        cameraPitch = Mathf.Clamp(
-            cameraPitch,
-            -lookLimit,
-            lookLimit
-        );
-
-        playerCamera.localRotation =
-            Quaternion.Euler(cameraPitch, 0f, 0f);
-    }
-
-   public void HandleCursor()
-    {
-        if (Keyboard.current != null &&
-            Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-                UnlockCursor();
-        }
-
-        if (!cursorLocked &&
-            Mouse.current != null &&
-            Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            LockCursor();
-        }
-    }
-
-   public void LockCursor()
-    {
-        cursorLocked = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-   public void UnlockCursor()
-    {
-        cursorLocked = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
+ 
 
     public void Use()//使う
     {
-
+        heldItem?.Use(this);
     }
 
-    public　void Drop()//落とす
+    // 持っていれば落とす、持っていなければ拾う
+    public void DropOrPickUp()
     {
+        // 持っているなら落とす
+        if (heldRigidbody != null)
+        {
+            Drop();
+            return;
+        }
 
+        // 持っていなければ拾う
+        PickUp();
     }
-    public void PickUp()//持つ
-    {
 
+
+    void PickUp()
+    {
+        if (playerCamera == null || holdPosition == null)
+        {
+            Debug.LogError(
+                "PlayerCameraかHoldPositionが未設定です"
+            );
+            return;
+        }
+
+        bool isHit = Physics.Raycast(
+            playerCamera.position,
+            playerCamera.forward,
+            out RaycastHit hit,
+            rayDistance
+        );
+
+        if (!isHit)
+        {
+            Debug.Log("Rayが何にも当たっていません");
+            return;
+        }
+
+        Debug.Log("Rayが当たった：" + hit.collider.name);
+
+        Rigidbody itemRigidbody =
+            hit.collider.attachedRigidbody;
+
+        if (itemRigidbody == null)
+        {
+            itemRigidbody =
+                hit.collider.GetComponentInParent<Rigidbody>();
+        }
+
+        if (itemRigidbody == null)
+        {
+            Debug.Log("Rigidbodyがありません");
+            return;
+        }
+
+        // ColliderまたはRigidbody本体のどちらかがItemなら拾う
+        bool isItem =
+            hit.collider.CompareTag("Item") ||
+            itemRigidbody.CompareTag("Item");
+
+        if (!isItem)
+        {
+            Debug.Log("Itemタグがありません");
+            return;
+        }
+
+        heldRigidbody = itemRigidbody;
+        heldItem = itemRigidbody.GetComponent<IItem>();
+
+        heldRigidbody.useGravity = false;
+        heldRigidbody.isKinematic = true;
+
+        // 持っている間はColliderを無効にする
+        heldColliders =
+            heldRigidbody.GetComponentsInChildren<Collider>();
+
+        foreach (Collider itemCollider in heldColliders)
+        {
+            itemCollider.enabled = false;
+        }
+    }
+    void Drop()
+    {
+        if (heldRigidbody == null)
+            return;
+
+        // プレイヤーの少し前へ移動
+        heldRigidbody.transform.position =
+            playerCamera.position +
+            playerCamera.forward * 2f;
+
+        heldRigidbody.isKinematic = false;
+        heldRigidbody.useGravity = true;
+
+        // Colliderを戻す
+        if (heldColliders != null)
+        {
+            foreach (Collider itemCollider in heldColliders)
+            {
+                itemCollider.enabled = true;
+            }
+        }
+
+        heldRigidbody = null;
+        heldItem = null;
+        heldColliders = null;
+
+        Debug.Log("アイテムを落としました");
+    }
+    public void Interact()
+    {
+        Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, rayDistance);
+        if (GetComponent<IInteractable>() != null)
+        {
+
+        }
+    }
+    void OnDrawGizmosSelected()
+    {
+        if (playerCamera != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(
+                playerCamera.position,
+                playerCamera.forward * rayDistance
+            );
+        }
+
+        if (holdPosition != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(
+                holdPosition.position,
+                0.05f
+            );
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (heldRigidbody == null ||
+            playerCamera == null)
+        {
+            return;
+        }
+
+        // カメラから見て右・下・前の位置
+        Vector3 targetPosition =
+            playerCamera.TransformPoint(holdOffset);
+
+        heldRigidbody.transform.position =
+            targetPosition;
+
+        heldRigidbody.transform.rotation =
+            playerCamera.rotation;
     }
 }
