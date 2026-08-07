@@ -3509,7 +3509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1838838071956074094, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: fallAngle
-      value: 45
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1838838071956074094, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: fallDuration
@@ -3521,7 +3521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8454118
+      value: 1.014143
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3529,7 +3529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000043339458
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.z
