@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 477604429420545236}
   - component: {fileID: 7724067340211129750}
   - component: {fileID: 8254724497140294608}
+  - component: {fileID: 8043881913721000008}
   m_Layer: 0
   m_Name: Cannonball test
   m_TagString: Item
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8043881913721000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710461240358249839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b434af11b1a234c90c8824c8491f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cannonball

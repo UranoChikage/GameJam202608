@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 // 大砲の弾(ICannonball)が当たると壊れる壁
@@ -19,6 +19,7 @@ public class BreakableWall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"当たってはいる");
         if (isBroken)
             return;
         if (collision.gameObject.GetComponentInParent<ICannonball>() == null)
@@ -55,7 +56,8 @@ public class BreakableWall : MonoBehaviour
                 rb.AddTorque(Random.insideUnitSphere * scatterForce, ForceMode.Impulse);
             }
 
-            StartCoroutine(ReleaseAfter(fragment, fragmentLifetime));
+            // wallMeshの非アクティブ化でthisが止まる可能性があるため、常にアクティブなfragmentPool側でコルーチンを回す
+            fragmentPool.StartCoroutine(ReleaseAfter(fragment, fragmentLifetime));
         }
     }
 
