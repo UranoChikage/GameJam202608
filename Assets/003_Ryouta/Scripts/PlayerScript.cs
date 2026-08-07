@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-[RequireComponent(typeof(CharacterController))]
+using System.Collections;
 public class PlayerScript : MonoBehaviour
 {
     //視点
     [SerializeField] Transform playerCamera;//動かすカメラ
    
-    CharacterController controller;
-    float verticalVelocity;
-
-
     [SerializeField] Transform[] holdPositions;
 
     // 使用する番号。0が最初
@@ -31,8 +27,17 @@ public class PlayerScript : MonoBehaviour
     public int CurrentHP => currentHP;
     public int MaxHP => maxHP;
 
+    [Header("被弾演出")]
+    [SerializeField] float invincibleTime = 1.0f;
+    [SerializeField] float knockbackDistance = 2.0f;
+    [SerializeField] float knockbackDuration = 0.1f;
+
+    bool isInvincible = false;
+    Rigidbody playerRigidbody;
+
     Rigidbody heldRigidbody;
     IItem heldItem;
+    public IItem HeldItem => heldItem;
 
     [SerializeField]
     Vector3 holdOffset =
@@ -47,31 +52,41 @@ public class PlayerScript : MonoBehaviour
     RaycastHit currentInteractHit;
     public Vector3 Forward => playerCamera.forward;
 
-    /// <summary>死亡判定を発火し、直近のSavePoint（StartPoint）へリスポーンする</summary>
+    /// <summary>死亡演出後、直近のSavePoint（StartPoint）へリスポーンする</summary>
     public void Die()
     {
+        StartCoroutine(DeathRoutine());
+    }
+
+    IEnumerator DeathRoutine()
+    {
         OnDead?.Invoke(true);
+
+        if (GameManager.Instance != null)
+            yield return GameManager.Instance.FadeOut();
 
         StartPoint startPoint = FindFirstObjectByType<StartPoint>();
         if (startPoint != null)
         {
             startPoint.Respawn();
         }
+
+        currentHP = maxHP;
+
+        if (GameManager.Instance != null)
+            yield return GameManager.Instance.FadeIn();
     }
 
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
-
         // ゲーム開始時は最大HP
         currentHP = maxHP;
+        playerRigidbody = GetComponent<Rigidbody>();
     }
 
   
     public void Update()
     {
-        Move();
-
         CheckInteractable();
 
         if (Keyboard.current != null &&
@@ -95,18 +110,15 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void Move()
-    {
-        if (controller.isGrounded)
-        {
-            if (verticalVelocity < 0f)
-                verticalVelocity = -2f;
-
-        }
-    }
+    
     public void TakeDamage(int damage)
     {
-        if (currentHP <= 0)
+        TakeDamage(damage, transform.position);
+    }
+
+    public void TakeDamage(int damage, Vector3 attackerPosition)
+    {
+        if (isInvincible || currentHP <= 0)
             return;
 
         currentHP -= damage;
@@ -121,6 +133,45 @@ public class PlayerScript : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("プレイヤーが死亡しました");
+            Die();
+        }
+        else
+        {
+            StartCoroutine(InvincibleRoutine());
+            StartCoroutine(KnockbackRoutine(attackerPosition));
+        }
+    }
+
+    IEnumerator InvincibleRoutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibleTime);
+        isInvincible = false;
+    }
+
+    IEnumerator KnockbackRoutine(Vector3 attackerPosition)
+    {
+        if (playerRigidbody == null)
+            yield break;
+
+        Vector3 dir = transform.position - attackerPosition;
+        dir.y = 0;
+        dir = dir.normalized;
+
+        float moveDistance = knockbackDistance;
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, out RaycastHit hit, knockbackDistance))
+        {
+            moveDistance = Mathf.Max(0, hit.distance - 0.5f);
+        }
+
+        float timer = 0f;
+        float speed = moveDistance / knockbackDuration;
+
+        while (timer < knockbackDuration)
+        {
+            playerRigidbody.MovePosition(playerRigidbody.position + dir * speed * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return null;
         }
     }
     private Transform GetHoldPosition()
