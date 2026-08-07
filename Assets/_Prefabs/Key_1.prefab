@@ -13,32 +13,40 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1277233849237032204, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: m_Range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277233849237032204, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_Intensity
-      value: 3.802708
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5191356966481371304, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5872635667610198080, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.84553945
+      value: 1.5999804
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.84553945
+      value: 1.5999804
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.84553945
+      value: 1.5999804
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.07
+      value: -0.070002
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 6790216492879191032, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -72,6 +80,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7781054908472718342, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781054908472718342, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781054908472718342, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781054908472718342, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7781054908472718343, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_Name
       value: KeyItem_ShinyEffect 1
@@ -79,6 +103,26 @@ PrefabInstance:
     - target: {fileID: 7781054908472718393, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420340733996900878, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6.806106
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420340733996900878, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6.806106
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420340733996900878, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6.806106
+      objectReference: {fileID: 0}
+    - target: {fileID: 8773940107114347811, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8773940107114347811, guid: 09bc5c439df72de458a84a827f0ac98c, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -153,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.775269
+      value: 2.629
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
       propertyPath: m_LocalPosition.z
