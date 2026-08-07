@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &810003222467593768
+--- !u!1 &5495235025709168580
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,91 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4930570078692976207}
-  - component: {fileID: 7375800337619434161}
-  - component: {fileID: 3564143509441061276}
+  - component: {fileID: 1977414564913100625}
   m_Layer: 0
-  m_Name: HealingItem
-  m_TagString: Item
+  m_Name: tyokoba_kannsei_ob
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4930570078692976207
+--- !u!4 &1977414564913100625
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810003222467593768}
+  m_GameObject: {fileID: 5495235025709168580}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.73009, y: -0, z: 1.31567}
+  m_LocalPosition: {x: 10.93213, y: 0, z: -23.57049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5675239262508302301}
+  - {fileID: 1737643820769457052}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &7375800337619434161
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810003222467593768}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &3564143509441061276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810003222467593768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bba2127ec32d543852c1b490e0816b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealingItem
-  healAmount: 1
---- !u!1001 &5280533746885679158
+--- !u!1001 &2276535132806501495
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4930570078692976207}
+    m_TransformParent: {fileID: 1977414564913100625}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.96739
+      value: 0.42798042
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.03476
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.46567
+      value: -1.8501511
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -135,8 +93,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
---- !u!4 &5675239262508302301 stripped
+--- !u!4 &1737643820769457052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5100269da66034c468fa145d9c77e4e8, type: 3}
-  m_PrefabInstance: {fileID: 5280533746885679158}
+  m_PrefabInstance: {fileID: 2276535132806501495}
   m_PrefabAsset: {fileID: 0}
