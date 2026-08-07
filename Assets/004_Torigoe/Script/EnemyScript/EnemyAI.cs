@@ -51,27 +51,24 @@ public class EnemyAI : MonoBehaviour
         currentState?.Update(this);
     }
 
-    // ★物理的に衝突した瞬間にダメージ・吹き飛ばし・敵停止を発動！
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // ぶつかった相手がプレイヤーの場合
-        if (collision.gameObject.CompareTag("Player") || collision.transform == player)
+        if (other.CompareTag("Player"))
         {
             if (isStopped) return;
 
-            PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
+            PlayerScript playerScript = other.GetComponent<PlayerScript>();
+
             if (playerScript != null)
             {
-                // 1. ダメージ ＆ 吹き飛ばしを実行
+                // ダメージ
                 playerScript.TakeDamage(attackDamage, transform.position);
 
-                // 2. エネミー自身をピタッと停止させる
+                // 攻撃後に敵を停止
                 StartCoroutine(StopMovementRoutine(attackCooldown));
-
             }
         }
     }
-
     // 攻撃後にエネミーの足を止める処理
     public IEnumerator StopMovementRoutine(float stopTime)
     {
