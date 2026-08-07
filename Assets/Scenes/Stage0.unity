@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 227605210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b51b7227ac75cf24490d098954b23e48, type: 3}
+  m_Script: {fileID: 11500000, guid: 36e3a02dbc80cb441995bff68841963f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathZone
 --- !u!1 &238069390
@@ -1381,7 +1381,7 @@ Transform:
   m_GameObject: {fileID: 283785086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.973209, y: -2.556, z: 14.11}
+  m_LocalPosition: {x: -15.35, y: -2.556, z: 14.11}
   m_LocalScale: {x: 3.8950398, y: 13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
