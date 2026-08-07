@@ -14,6 +14,7 @@ public class TestDoor : MonoBehaviour, IInteractable
             {
                
                 OpenDoor();
+                player.ConsumeHeldItem();
             }
             else
             {
