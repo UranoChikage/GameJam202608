@@ -2,6 +2,8 @@
 
 public class TestKey : MonoBehaviour,IItem,IKey 
 {
+    private int doorKeyID;
+
     [SerializeField]
     private int keyID;
 
@@ -21,9 +23,29 @@ public class TestKey : MonoBehaviour,IItem,IKey
         if (playre)
         {
             PickUp(playre);
-            gameObject.SetActive(false);
-            Debug.Log("使った");
+            
         }
+    }
+    public void Interact(PlayerScript player)
+    {
+        if (player.HeldItem is IKey key)
+        {
+            if (key.KeyID == doorKeyID)
+            {
+
+                keydrop();
+            }
+            else
+            {
+                Debug.Log("鍵が違います");
+            }
+        }
+    }
+
+    private void keydrop()
+    {
+        Debug.Log("鍵を使った！");
+        gameObject.SetActive(false);
     }
 }
 
