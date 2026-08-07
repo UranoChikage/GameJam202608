@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConstantSpeedPendulum
   swingAxis: 2
-  maxAngle: 64
-  angularSpeed: 109.7
+  maxAngle: 75
+  angularSpeed: 100
 --- !u!1 &3507530421723703177
 GameObject:
   m_ObjectHideFlags: 0

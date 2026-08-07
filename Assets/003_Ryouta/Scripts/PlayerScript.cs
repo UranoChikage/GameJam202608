@@ -121,8 +121,14 @@ public class PlayerScript : MonoBehaviour
         if (isInvincible || currentHP <= 0)
             return;
 
+        int previousHP = currentHP;
         currentHP -= damage;
         currentHP = Mathf.Max(currentHP, 0);
+
+        if (currentHP < previousHP)
+        {
+            DamageVignetteEffect.TryPlayDamageEffect();
+        }
 
         Debug.Log(
             "ダメージ：" + damage +
