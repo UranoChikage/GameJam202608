@@ -88,12 +88,6 @@ public sealed class DamageVignetteEffect : MonoBehaviour
             vignette.intensity.value = GetPulseIntensity();
         }
 
-        // 動作確認用。スペースキーを押すとダメージ演出を再生する。
-        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            PlayDamageEffect();
-        }
-
         // Hキーで緑のヒール演出、Bキーで黄色のブースト演出を確認できる。
         if (Keyboard.current != null && Keyboard.current.hKey.wasPressedThisFrame)
         {
