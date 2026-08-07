@@ -2655,7 +2655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328aaf32c370b9b4fb0b0fbaa0e24395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
-  nextSceneName: Stage1
+  nextSceneName: 
 --- !u!23 &1243663818
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3476,7 +3476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.71
+      value: -8.51
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3484,7 +3484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.25
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalRotation.w
