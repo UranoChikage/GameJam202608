@@ -20,7 +20,7 @@ public class WallBreak : MonoBehaviour
 
     [Header("飛び散る力")]
     [SerializeField]
-    private float explosionForce = 400f;
+    private float explosionForce = 200f;
 
     [Header("爆発半径")]
     [SerializeField]
@@ -32,7 +32,7 @@ public class WallBreak : MonoBehaviour
 
     [Header("破片を消すまでの時間")]
     [SerializeField]
-    private float destroyPiecesAfter = 5f;
+    private float destroyPiecesAfter = 3f;
 
     private bool isBroken = false;
 
