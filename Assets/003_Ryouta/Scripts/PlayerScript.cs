@@ -251,7 +251,7 @@ public class PlayerScript : MonoBehaviour
             playerCamera.position,
             Forward,
             out RaycastHit hit,
-            rayDistance
+            pickUpDistance
         );
 
         if (!isHit)
