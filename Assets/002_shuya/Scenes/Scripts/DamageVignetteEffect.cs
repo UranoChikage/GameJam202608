@@ -115,6 +115,24 @@ public sealed class DamageVignetteEffect : MonoBehaviour
         PlayEffect(Color.red, damageIntensity, fadeDuration);
     }
 
+    /// <summary>現在のシーンに登録されたポストプロセスへダメージを通知する。</summary>
+    public static bool TryPlayDamageEffect()
+    {
+        if (ActiveInstance == null)
+        {
+            ActiveInstance = FindFirstObjectByType<DamageVignetteEffect>();
+        }
+
+        if (ActiveInstance == null || !ActiveInstance.isActiveAndEnabled)
+        {
+            Debug.LogError("ダメージ用のDamageVignetteEffectが有効なシーン内に見つかりません。");
+            return false;
+        }
+
+        ActiveInstance.PlayDamageEffect();
+        return true;
+    }
+
     /// <summary>緑のヒール演出を再生する。Hキーからも呼ばれる。</summary>
     public void PlayHealEffect()
     {
