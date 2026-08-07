@@ -12,6 +12,12 @@ public class Cannonball : MonoBehaviour,IItem,ICannonball
     // IItemインターフェースのUseメソッドの実装
     public void Use(PlayerScript player, bool interactFailed)
     {
+        if (player)
+        {
+            player.DropOrPickUp();
+            rb.AddForce(player.Forward * 5, ForceMode.Impulse);
+            Debug.Log("使った");
+        }
     }
 
     // 大砲の玉を拾うメソッド
