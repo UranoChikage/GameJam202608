@@ -6,33 +6,64 @@ public class RisingSignboard : MonoBehaviour
     [SerializeField] Vector3 risenLocalEulerAngles = Vector3.zero;
     [SerializeField] float duration = 1f;
     [SerializeField] AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] TriggerRelay triggerRelay;
 
     Quaternion startRotation;
     Quaternion targetRotation;
-    bool triggered;
-    float elapsed;
+    float t;
+    bool rising;
+    bool active;
 
     void Awake()
     {
         startRotation = transform.localRotation;
         targetRotation = Quaternion.Euler(risenLocalEulerAngles);
+
+        if (triggerRelay != null)
+        {
+            triggerRelay.TriggerEntered += HandleTriggerEnter;
+            triggerRelay.TriggerExited += HandleTriggerExit;
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnDestroy()
     {
-        if (triggered) return;
+        if (triggerRelay != null)
+        {
+            triggerRelay.TriggerEntered -= HandleTriggerEnter;
+            triggerRelay.TriggerExited -= HandleTriggerExit;
+        }
+    }
+
+    void OnTriggerEnter(Collider other) => HandleTriggerEnter(other);
+
+    void OnTriggerExit(Collider other) => HandleTriggerExit(other);
+
+    void HandleTriggerEnter(Collider other)
+    {
         if (!other.transform.TryGetComponent<PlayerScript>(out _)) return;
 
-        triggered = true;
+        rising = true;
+        active = true;
+    }
+
+    void HandleTriggerExit(Collider other)
+    {
+        if (!other.transform.TryGetComponent<PlayerScript>(out _)) return;
+
+        rising = false;
+        active = true;
     }
 
     void Update()
     {
-        if (!triggered) return;
+        if (!active) return;
 
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration);
+        float dt = Time.deltaTime / duration;
+        t = rising ? Mathf.Clamp01(t + dt) : Mathf.Clamp01(t - dt);
 
         transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, curve.Evaluate(t));
+
+        if (rising ? t >= 1f : t <= 0f) active = false;
     }
 }

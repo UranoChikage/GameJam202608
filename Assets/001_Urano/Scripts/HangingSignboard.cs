@@ -6,33 +6,64 @@ public class HangingSignboard : MonoBehaviour
     [SerializeField] float dropDistance = 3f;
     [SerializeField] float duration = 1f;
     [SerializeField] AnimationCurve curve;
+    [SerializeField] TriggerRelay triggerRelay;
 
     Vector3 startPosition;
     Vector3 targetPosition;
-    bool triggered;
-    float elapsed;
+    float t;
+    bool falling;
+    bool active;
 
     void Awake()
     {
         startPosition = transform.position;
         targetPosition = startPosition + Vector3.down * dropDistance;
+
+        if (triggerRelay != null)
+        {
+            triggerRelay.TriggerEntered += HandleTriggerEnter;
+            triggerRelay.TriggerExited += HandleTriggerExit;
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnDestroy()
     {
-        if (triggered) return;
+        if (triggerRelay != null)
+        {
+            triggerRelay.TriggerEntered -= HandleTriggerEnter;
+            triggerRelay.TriggerExited -= HandleTriggerExit;
+        }
+    }
+
+    void OnTriggerEnter(Collider other) => HandleTriggerEnter(other);
+
+    void OnTriggerExit(Collider other) => HandleTriggerExit(other);
+
+    void HandleTriggerEnter(Collider other)
+    {
         if (!other.transform.TryGetComponent<PlayerScript>(out _)) return;
 
-        triggered = true;
+        falling = true;
+        active = true;
+    }
+
+    void HandleTriggerExit(Collider other)
+    {
+        if (!other.transform.TryGetComponent<PlayerScript>(out _)) return;
+
+        falling = false;
+        active = true;
     }
 
     void Update()
     {
-        if (!triggered || elapsed >= duration) return;
+        if (!active) return;
 
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration);
+        float dt = Time.deltaTime / duration;
+        t = falling ? Mathf.Clamp01(t + dt) : Mathf.Clamp01(t - dt);
 
         transform.position = Vector3.LerpUnclamped(startPosition, targetPosition, curve.Evaluate(t));
+
+        if (falling ? t >= 1f : t <= 0f) active = false;
     }
 }
