@@ -15,6 +15,9 @@ public class SplineFollower : MonoBehaviour
     [SerializeField]
     Vector3 offset = Vector3.zero;
 
+    [SerializeField]
+    float rotationSmoothSpeed = 5f; // 大きいほど素早く目標回転に追従する
+
     void Update()
     {
         //Splineや追従オブジェクトの失効などを検知してエラー防止
@@ -39,10 +42,14 @@ public class SplineFollower : MonoBehaviour
         // 位置の反映
         transform.transform.position = (Vector3)pos + offset;
 
-        // 回転の反映
+        // 回転の反映（急なタンジェント変化でカクつかないようSlerpで滑らかに追従）
         if (math.any(tangent))
         {
-            transform.rotation = Quaternion.LookRotation((Vector3)tangent, (Vector3)up);
+            Quaternion targetRotation = Quaternion.LookRotation((Vector3)tangent, (Vector3)up);
+
+            transform.rotation = Application.isPlaying
+                ? Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed)
+                : targetRotation; // 編集中は即反映してスクラブ操作を分かりやすくする
         }
     }
 }
