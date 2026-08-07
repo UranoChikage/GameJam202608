@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cf817230c896ce647bfc90cc17a25343, type: 2}
     - target: {fileID: 919132149155446097, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
       propertyPath: m_Name
       value: Diamond
@@ -222,8 +226,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3262814490846080110}
   m_SourcePrefab: {fileID: 100100000, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
+--- !u!1 &19137556626760284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
+  m_PrefabInstance: {fileID: 901445947896520461}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3262814490846080110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19137556626760284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374dc0247bba0604ba6cc2647facd71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GOAL
+  moveHeight: 0.15
+  cycleDuration: 2
 --- !u!4 &794935006503581926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9657a0e3b97462f43ad227528cf1f6fe, type: 3}
