@@ -870,9 +870,12 @@ MonoBehaviour:
     m_Bits: 16
   jumpForce: 5
   crouchHeight: 1
+  crouchSpeed: 10
   crouchMoveSpeed: 2.5
   crouchCameraOffset: -0.5
-  crouchSpeed: 10
+  bodyVisual: {fileID: 0}
+  crouchBodyScaleY: 0.5
+  knockbackDamping: 4
 --- !u!114 &593503243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,6 +897,8 @@ MonoBehaviour:
   dropDistance: 1
   dropHeight: 0.5
   movementController: {fileID: 0}
+  maxHP: 3
+  currentHP: 0
   holdOffset: {x: 0.4, y: -0.3, z: 0.8}
   showInteractDebug: 1
 --- !u!143 &593503244
@@ -1877,9 +1882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cebb85767bf688438a4041ec866e8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::key_
-  key1: 0
-  key2: 0
-  key3: 0
+  key1: 1
+  key2: 1
+  key3: 1
 --- !u!54 &1927278694
 Rigidbody:
   m_ObjectHideFlags: 0
