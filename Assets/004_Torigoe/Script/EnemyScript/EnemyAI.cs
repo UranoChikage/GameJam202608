@@ -59,11 +59,11 @@ public class EnemyAI : MonoBehaviour
         {
             if (isStopped) return;
 
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
+            if (playerScript != null)
             {
                 // 1. ダメージ ＆ 吹き飛ばしを実行
-                playerHealth.TakeDamage(attackDamage, transform.position);
+                playerScript.TakeDamage(attackDamage, transform.position);
 
                 // 2. エネミー自身をピタッと停止させる
                 StartCoroutine(StopMovementRoutine(attackCooldown));
