@@ -1,8 +1,9 @@
-﻿using Unity.Mathematics;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
 [ExecuteAlways]
+[RequireComponent(typeof(Rigidbody))]
 public class SplineFollower : MonoBehaviour
 {
     [SerializeField]
@@ -17,6 +18,18 @@ public class SplineFollower : MonoBehaviour
 
     [SerializeField]
     float rotationSmoothSpeed = 5f; // 大きいほど素早く目標回転に追従する
+
+    Rigidbody rb;
+    Vector3 targetPosition;
+    Quaternion targetRotation;
+    bool hasTargetRotation;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true; // Splineに沿って直接動かすため物理演算(重力等)の影響は受けない
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+    }
 
     void Update()
     {
@@ -39,17 +52,35 @@ public class SplineFollower : MonoBehaviour
         // Splineの計算をする核心部分
         container[0].Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
 
-        // 位置の反映
-        transform.transform.position = (Vector3)pos + offset;
+        targetPosition = (Vector3)pos + offset;
 
-        // 回転の反映（急なタンジェント変化でカクつかないようSlerpで滑らかに追従）
         if (math.any(tangent))
         {
-            Quaternion targetRotation = Quaternion.LookRotation((Vector3)tangent, (Vector3)up);
+            targetRotation = Quaternion.LookRotation((Vector3)tangent, (Vector3)up);
+            hasTargetRotation = true;
+        }
 
-            transform.rotation = Application.isPlaying
-                ? Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed)
-                : targetRotation; // 編集中は即反映してスクラブ操作を分かりやすくする
+        if (!Application.isPlaying)
+        {
+            // 編集中はRigidbodyを介さず即反映してスクラブ操作を分かりやすくする
+            transform.position = targetPosition;
+            if (hasTargetRotation) transform.rotation = targetRotation;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!Application.isPlaying) return;
+
+        // KinematicなRigidbodyをMovePositionで動かすと、PhysXが物理的な接触・摩擦として
+        // 正しく扱ってくれるため、上に乗っているPlayerも自然に一緒に運ばれる
+        rb.MovePosition(targetPosition);
+
+        // 回転の反映（急なタンジェント変化でカクつかないようSlerpで滑らかに追従）
+        if (hasTargetRotation)
+        {
+            Quaternion rotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed);
+            rb.MoveRotation(rotation);
         }
     }
 }
