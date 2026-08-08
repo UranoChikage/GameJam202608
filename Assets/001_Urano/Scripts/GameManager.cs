@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Time.timeScale = 1f;
         isLoading = true;
         StartCoroutine(LoadSceneRoutine(sceneName));
     }
