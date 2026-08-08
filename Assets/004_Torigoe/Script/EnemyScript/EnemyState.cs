@@ -19,7 +19,9 @@ public class PatrolState : IEnemyState
         }
 
         // 行き先に到着したら次のポイントへ
-        if (!enemy.agent.pathPending && enemy.agent.remainingDistance < 0.5f)
+        if (enemy.agent.isOnNavMesh &&
+            !enemy.agent.pathPending &&
+            enemy.agent.remainingDistance < 0.5f)
         {
             enemy.MoveToNextWaypoint();
         }
@@ -47,7 +49,10 @@ public class ChaseState : IEnemyState
         if (enemy.CanSeePlayer())
         {
             // 距離チェックはせず、常にプレイヤーへ向かって走らせる（衝突はOnCollisionEnterで検知）
-            enemy.agent.SetDestination(enemy.player.position);
+            if (enemy.agent.isOnNavMesh)
+            {
+                enemy.agent.SetDestination(enemy.player.position);
+            }
         }
         else
         {

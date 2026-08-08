@@ -119,6 +119,8 @@ public class EnemyAI : MonoBehaviour
     public void MoveToNextWaypoint()
     {
         if (waypoints == null || waypoints.Length == 0) return;
+        if (agent == null || !agent.isOnNavMesh) return;
+
         agent.SetDestination(waypoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
     }
