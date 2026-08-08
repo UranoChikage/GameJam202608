@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6901387912611135443}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4133369897047686170}
+  - {fileID: 8101999363284931700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4840705987344532872
@@ -136,12 +137,15 @@ MonoBehaviour:
   - {fileID: 7430441413863143683}
   holdPositionIndex: 0
   pickUpDistance: 3
-  rayDistance: 10
+  rayDistance: 5
   dropDistance: 1
   dropHeight: 0.5
   movementController: {fileID: 5481729128427928140}
   maxHP: 3
   currentHP: 0
+  invincibleTime: 1
+  knockbackDistance: 2
+  knockbackDuration: 0.1
   holdOffset: {x: 0.4, y: -0.3, z: 0.8}
   showInteractDebug: 1
 --- !u!114 &5481729128427928140
@@ -160,18 +164,25 @@ MonoBehaviour:
   cameraTransform: {fileID: 4133369897047686170}
   moveSpeed: 5
   rotateBodyWithYaw: 1
-  groundCheck: {fileID: 3001667193202380081}
-  groundCheckRadius: 1
+  groundCheck: {fileID: 8101999363284931700}
+  groundCheckRadius: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 16
-  jumpForce: 5
+  jumpForce: 7
   crouchHeight: 1
   crouchSpeed: 10
   crouchMoveSpeed: 2.5
   crouchCameraOffset: -0.5
   bodyVisual: {fileID: 0}
   crouchBodyScaleY: 0.5
+  footstepClips:
+  - {fileID: 8300000, guid: 2be7322dffc420b40b7ca9f424ddcb54, type: 3}
+  - {fileID: 8300000, guid: 80fd904e7356a954fa7a0288450aaa8f, type: 3}
+  - {fileID: 8300000, guid: 5bccb97dbff528d48932bd09ca358c2d, type: 3}
+  footstepInterval: 0.4
+  footstepIntervalCrouch: 0.6
+  knockbackDamping: 4
 --- !u!114 &8098013983281078940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +226,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &730454183800471242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8101999363284931700}
+  m_Layer: 0
+  m_Name: FootTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8101999363284931700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730454183800471242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3001667193202380081}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2306415865655820051
 GameObject:
   m_ObjectHideFlags: 0

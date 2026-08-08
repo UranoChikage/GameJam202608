@@ -32,6 +32,13 @@ public class FPSCameraController : MonoBehaviour
     [SerializeField] private Transform bodyVisual;
     [SerializeField] private float crouchBodyScaleY = 0.5f;
 
+    [Header("足音")]
+    [SerializeField] private AudioClip[] footstepClips;
+    [SerializeField] private float footstepInterval = 0.4f;
+    [SerializeField] private float footstepIntervalCrouch = 0.6f;
+
+    private float footstepTimer;
+
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
 
@@ -40,6 +47,7 @@ public class FPSCameraController : MonoBehaviour
     private bool jumpRequested;
     private bool isCrouching;
     private Vector3 knockbackVelocity;
+    private IMovingPlatform currentPlatform;
 
     [Header("ノックバック")]
     [SerializeField, Min(0f)] private float knockbackDamping = 4f;
@@ -138,9 +146,76 @@ public class FPSCameraController : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyCrouchCollider();
+        ApplyPlatformMovement();
         Move();
         Rotate();
         Jump();
+        HandleFootsteps();
+    }
+
+    private void HandleFootsteps()
+    {
+        if (footstepClips == null || footstepClips.Length == 0) return;
+
+        bool isMoving = isGrounded && moveInput.sqrMagnitude > 0.01f;
+
+        if (!isMoving)
+        {
+            footstepTimer = 0f;
+            return;
+        }
+
+        footstepTimer -= Time.fixedDeltaTime;
+
+        if (footstepTimer > 0f) return;
+
+        footstepTimer = isCrouching ? footstepIntervalCrouch : footstepInterval;
+
+        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        Vector3 position = groundCheck != null ? groundCheck.position : transform.position;
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayFootstep(clip, position);
+        }
+    }
+
+    private void ApplyPlatformMovement()
+    {
+        if (currentPlatform == null)
+            return;
+
+        rb.position += currentPlatform.DeltaMovement;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // 足元（下向き）で接触している場合のみ足場として扱う
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (contact.normal.y < 0.5f)
+                continue;
+
+            IMovingPlatform platform =
+                collision.gameObject.GetComponentInParent<IMovingPlatform>();
+
+            if (platform != null)
+            {
+                currentPlatform = platform;
+                return;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        IMovingPlatform platform =
+            collision.gameObject.GetComponentInParent<IMovingPlatform>();
+
+        if (platform != null && platform == currentPlatform)
+        {
+            currentPlatform = null;
+        }
     }
 
     private void LateUpdate()

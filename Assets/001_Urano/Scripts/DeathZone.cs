@@ -7,6 +7,12 @@ public class DeathZone : MonoBehaviour
         if (other.transform.TryGetComponent<PlayerScript>(out var player))
         {
             player.Die();
+            return;
+        }
+
+        if (other.GetComponentInParent<ItemRespawnPoint>() is ItemRespawnPoint item)
+        {
+            item.ResetToStart();
         }
     }
 }

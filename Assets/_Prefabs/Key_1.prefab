@@ -259,6 +259,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7759070918065907015}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5607408966583806684}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7717603441394016832}
   m_SourcePrefab: {fileID: 100100000, guid: 5f7b5bc759dd3714a8c2dcec90db4bb1, type: 3}
 --- !u!4 &5830389023751833663 stripped
 Transform:
@@ -332,3 +338,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestKey
   keyID: 1
+--- !u!114 &-5607408966583806684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602949137684025989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e24e46f2276b840aad44a263d089a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemRespawnPoint
+--- !u!114 &7717603441394016832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602949137684025989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c62dc37d9fd6e942babdcd37fa35647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropSound
+  dropClips: []
+  minImpactSpeed: 1.5
+  cooldown: 0.2
