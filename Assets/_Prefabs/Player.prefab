@@ -176,6 +176,12 @@ MonoBehaviour:
   crouchCameraOffset: -0.5
   bodyVisual: {fileID: 0}
   crouchBodyScaleY: 0.5
+  footstepClips:
+  - {fileID: 8300000, guid: 2be7322dffc420b40b7ca9f424ddcb54, type: 3}
+  - {fileID: 8300000, guid: 80fd904e7356a954fa7a0288450aaa8f, type: 3}
+  - {fileID: 8300000, guid: 5bccb97dbff528d48932bd09ca358c2d, type: 3}
+  footstepInterval: 0.4
+  footstepIntervalCrouch: 0.6
   knockbackDamping: 4
 --- !u!114 &8098013983281078940
 MonoBehaviour:

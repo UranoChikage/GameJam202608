@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6394909985457227458}
   - component: {fileID: 6452903299912928978}
   - component: {fileID: 9134689992491649902}
+  - component: {fileID: -4595671907130650367}
   m_Layer: 0
   m_Name: BrokenWall 2
   m_TagString: Untagged
@@ -119,6 +120,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7976595604265308452}
   m_Mesh: {fileID: -5396958229368037279, guid: f946b10aedf529c40acfea63a142f093, type: 3}
+--- !u!114 &-4595671907130650367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7976595604265308452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c62dc37d9fd6e942babdcd37fa35647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropSound
+  dropClips: []
+  minImpactSpeed: 1.5
+  cooldown: 0.2
 --- !u!1001 &2515309037162517636
 PrefabInstance:
   m_ObjectHideFlags: 0

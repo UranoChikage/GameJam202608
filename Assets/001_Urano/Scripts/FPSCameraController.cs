@@ -32,6 +32,13 @@ public class FPSCameraController : MonoBehaviour
     [SerializeField] private Transform bodyVisual;
     [SerializeField] private float crouchBodyScaleY = 0.5f;
 
+    [Header("足音")]
+    [SerializeField] private AudioClip[] footstepClips;
+    [SerializeField] private float footstepInterval = 0.4f;
+    [SerializeField] private float footstepIntervalCrouch = 0.6f;
+
+    private float footstepTimer;
+
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
 
@@ -143,6 +150,34 @@ public class FPSCameraController : MonoBehaviour
         Move();
         Rotate();
         Jump();
+        HandleFootsteps();
+    }
+
+    private void HandleFootsteps()
+    {
+        if (footstepClips == null || footstepClips.Length == 0) return;
+
+        bool isMoving = isGrounded && moveInput.sqrMagnitude > 0.01f;
+
+        if (!isMoving)
+        {
+            footstepTimer = 0f;
+            return;
+        }
+
+        footstepTimer -= Time.fixedDeltaTime;
+
+        if (footstepTimer > 0f) return;
+
+        footstepTimer = isCrouching ? footstepIntervalCrouch : footstepInterval;
+
+        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        Vector3 position = groundCheck != null ? groundCheck.position : transform.position;
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayFootstep(clip, position);
+        }
     }
 
     private void ApplyPlatformMovement()
