@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public sealed class TitleBlackoutScript : MonoBehaviour
 {
+    [Header("Game Start Image")]
+    [SerializeField] private Button gameStartButton;
+    [SerializeField] private Image imageToSwitch;
+    [SerializeField] private Sprite gameStartImage;
+
     [Header("暗転の発生間隔（秒）")]
     [SerializeField, Min(0.1f)] private float minimumInterval = 8f;
     [SerializeField, Min(0.1f)] private float maximumInterval = 20f;
@@ -17,10 +22,16 @@ public sealed class TitleBlackoutScript : MonoBehaviour
 
     private GameObject overlayObject;
     private CanvasGroup overlayCanvasGroup;
+    private bool hasSwitchedGameStartImage;
 
     private void Awake()
     {
         CreateBlackoutOverlay();
+
+        if (gameStartButton != null)
+        {
+            gameStartButton.onClick.AddListener(SwitchGameStartImage);
+        }
     }
 
     private IEnumerator Start()
@@ -49,10 +60,26 @@ public sealed class TitleBlackoutScript : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (gameStartButton != null)
+        {
+            gameStartButton.onClick.RemoveListener(SwitchGameStartImage);
+        }
+
         if (overlayObject != null)
         {
             Destroy(overlayObject);
         }
+    }
+
+    public void SwitchGameStartImage()
+    {
+        if (hasSwitchedGameStartImage || imageToSwitch == null || gameStartImage == null)
+        {
+            return;
+        }
+
+        hasSwitchedGameStartImage = true;
+        imageToSwitch.sprite = gameStartImage;
     }
 
     private void CreateBlackoutOverlay()
