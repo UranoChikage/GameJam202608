@@ -136,7 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c62dc37d9fd6e942babdcd37fa35647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropSound
-  dropClips: []
+  dropClips:
+  - {fileID: 8300000, guid: 0a4449bfa36437c43bd216e54e1e948b, type: 3}
   minImpactSpeed: 1.5
   cooldown: 0.2
 --- !u!1001 &1863971515892035668
