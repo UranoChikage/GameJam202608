@@ -1,7 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>アイテムが床などに着地した際、SEを1回再生する汎用コンポーネント。</summary>
-[RequireComponent(typeof(Rigidbody))]
 public class ItemDropSound : MonoBehaviour
 {
     [SerializeField] private AudioClip[] dropClips;
