@@ -41,6 +41,7 @@ public sealed class ChatNovelController : MonoBehaviour
     private int nextMessageIndex;
     private bool isUpdatingScroll;
     private bool canAdvance;
+    private Image background;
     private bool isLoadingScene;
 
     private void Awake()
@@ -103,7 +104,7 @@ public sealed class ChatNovelController : MonoBehaviour
         scrollRect.horizontal = false;
         scrollRect.vertical = true;
 
-        Image background = scrollRect.GetComponent<Image>();
+        background = scrollRect.GetComponent<Image>();
         if (background != null)
         {
             background.color = Color.black;
@@ -186,7 +187,7 @@ public sealed class ChatNovelController : MonoBehaviour
 
         yield return FadeText(introductionCanvasGroup, 0f, 1f);
         yield return new WaitForSecondsRealtime(introductionDuration);
-        yield return FadeText(introductionCanvasGroup, 1f, 0f);
+        yield return FadeOutIntroduction(introductionCanvasGroup);
 
         Destroy(introductionText.gameObject);
         ShowNextMessage();
@@ -205,6 +206,35 @@ public sealed class ChatNovelController : MonoBehaviour
         }
 
         target.alpha = to;
+    }
+
+    private IEnumerator FadeOutIntroduction(CanvasGroup target)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float alpha = 1f - Mathf.Clamp01(elapsed / fadeDuration);
+            target.alpha = alpha;
+            SetBackgroundAlpha(alpha);
+            yield return null;
+        }
+
+        target.alpha = 0f;
+        SetBackgroundAlpha(0f);
+    }
+
+    private void SetBackgroundAlpha(float alpha)
+    {
+        if (background == null)
+        {
+            return;
+        }
+
+        Color color = background.color;
+        color.a = alpha;
+        background.color = color;
     }
 
     private void ShowNextMessage()
