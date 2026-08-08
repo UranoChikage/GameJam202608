@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2961956734824684403}
   - component: {fileID: 8856847710937349780}
   - component: {fileID: 1216227893381345568}
+  - component: {fileID: 691591963145295303}
   m_Layer: 0
   m_Name: cannonball Item
   m_TagString: Item
@@ -153,3 +154,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b434af11b1a234c90c8824c8491f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cannonball
+--- !u!114 &691591963145295303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690460942567724504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e24e46f2276b840aad44a263d089a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemRespawnPoint

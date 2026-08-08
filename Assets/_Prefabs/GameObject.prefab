@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94fa09b96072f7409673c61d9130168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConstantSpeedPendulum
-  swingAxis: 2
+  swingAxis: 0
   maxAngle: 75
-  angularSpeed: 100
+  angularSpeed: 80
 --- !u!1001 &8718080250131092631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,6 +111,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0c128dd7d14dcc547b06585a3d29986f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3072485785759693410}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0c128dd7d14dcc547b06585a3d29986f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7094718668026731283}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0c128dd7d14dcc547b06585a3d29986f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6290800116856586475}
   m_SourcePrefab: {fileID: 100100000, guid: 0c128dd7d14dcc547b06585a3d29986f, type: 3}
 --- !u!1 &8376059917842557382 stripped
 GameObject:
@@ -132,6 +138,54 @@ MonoBehaviour:
   swingAxis: 2
   maxAngle: 75
   angularSpeed: 100
+--- !u!135 &7094718668026731283
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8376059917842557382}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.48419154
+  m_Center: {x: 0, y: -1.0800568, z: 0}
+--- !u!54 &6290800116856586475
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8376059917842557382}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &9184650198416421756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0c128dd7d14dcc547b06585a3d29986f, type: 3}

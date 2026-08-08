@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7375800337619434161}
   - component: {fileID: 3564143509441061276}
   - component: {fileID: 4932044491700271312}
+  - component: {fileID: 7663924806951983912}
   m_Layer: 0
   m_Name: HealingItem
   m_TagString: Item
@@ -96,6 +97,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7663924806951983912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810003222467593768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c62dc37d9fd6e942babdcd37fa35647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropSound
+  dropClips:
+  - {fileID: 0}
+  minImpactSpeed: 1.5
+  cooldown: 0.2
 --- !u!1001 &5280533746885679158
 PrefabInstance:
   m_ObjectHideFlags: 0
