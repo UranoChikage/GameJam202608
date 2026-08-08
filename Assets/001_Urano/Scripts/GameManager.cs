@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button retryButton;
     [SerializeField] private string titleSceneName = "Title";
 
+    [Header("UI - オプションボタンを表示するシーン")]
+    [Tooltip("ここに含まれるシーンでのみOptionボタンを表示する（Novelパートのシーン名を入れる）")]
+    [SerializeField] private string[] scenesWithOptionButton;
+
     private bool isLoading;
 
     private void Awake()
@@ -50,6 +54,19 @@ public class GameManager : MonoBehaviour
 
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
+
+        UpdateOptionButtonVisibility(SceneManager.GetActiveScene().name);
+    }
+
+    private void UpdateOptionButtonVisibility(string sceneName)
+    {
+        if (openOptionsButton == null) return;
+
+        bool show =
+            scenesWithOptionButton != null &&
+            System.Array.IndexOf(scenesWithOptionButton, sceneName) >= 0;
+
+        openOptionsButton.gameObject.SetActive(show);
     }
 
     /// <summary>オプションボタンから呼ぶ。オプションメニューを開く。</summary>
@@ -141,6 +158,11 @@ public class GameManager : MonoBehaviour
     {
         isLoading = false;
         FadeIn();
+
+        if (optionsPanel != null)
+            optionsPanel.SetActive(false);
+
+        UpdateOptionButtonVisibility(scene.name);
     }
     private void Update()
     {
