@@ -33,7 +33,6 @@ public class TestKey : MonoBehaviour,IItem,IKey
             if (key.KeyID == doorKeyID)
             {
 
-                keydrop();
             }
             else
             {
@@ -42,11 +41,6 @@ public class TestKey : MonoBehaviour,IItem,IKey
         }
     }
 
-    private void keydrop()
-    {
-        Debug.Log("鍵を使った！");
-        gameObject.SetActive(false);
-    }
 }
 
 
