@@ -1213,6 +1213,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
+--- !u!134 &186287389
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MovingPlatform_Frictionless
+  serializedVersion: 2
+  m_DynamicFriction: 0
+  m_StaticFriction: 0
+  m_Bounciness: 0
+  m_FrictionCombine: 2
+  m_BounceCombine: 2
 --- !u!4 &215757386 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6399225270375615491, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
@@ -5122,6 +5135,10 @@ PrefabInstance:
       value: Proximity Falling Pole 1
       objectReference: {fileID: 0}
     - target: {fileID: 1838838071956074094, guid: be012cd7647990040af459eb8b2e818a, type: 3}
+      propertyPath: fallAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838838071956074094, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: fallAngle
       value: 45
       objectReference: {fileID: 0}
@@ -5135,7 +5152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8454118
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8314000963313601927, guid: be012cd7647990040af459eb8b2e818a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6485,19 +6502,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 810003222467593768, guid: eb31a4ae3bfd685498565d541ed03a32, type: 3}
   m_PrefabInstance: {fileID: 1246701148}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &1253535838
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: MovingPlatform_Frictionless
-  serializedVersion: 2
-  m_DynamicFriction: 0
-  m_StaticFriction: 0
-  m_Bounciness: 0
-  m_FrictionCombine: 2
-  m_BounceCombine: 2
 --- !u!4 &1260271122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8581624624322905819, guid: ec759cdbc36998548859ff1a77ffc16c, type: 3}
