@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// 使い方：
@@ -15,6 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup fadeCanvas;
     [SerializeField] private float fadeDuration = 0.5f;
 
+    [Header("UI - オプションメニュー")]
+    [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private Button openOptionsButton;
+    [SerializeField] private Button closeOptionsButton;
+    [SerializeField] private Button titleButton;
+    [SerializeField] private Button retryButton;
+    [SerializeField] private string titleSceneName = "Title";
+
     private bool isLoading;
 
     private void Awake()
@@ -26,6 +35,47 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (openOptionsButton != null)
+            openOptionsButton.onClick.AddListener(OpenOptions);
+
+        if (closeOptionsButton != null)
+            closeOptionsButton.onClick.AddListener(CloseOptions);
+
+        if (titleButton != null)
+            titleButton.onClick.AddListener(GoToTitle);
+
+        if (retryButton != null)
+            retryButton.onClick.AddListener(RetryStage);
+
+        if (optionsPanel != null)
+            optionsPanel.SetActive(false);
+    }
+
+    /// <summary>オプションボタンから呼ぶ。オプションメニューを開く。</summary>
+    public void OpenOptions()
+    {
+        if (optionsPanel != null)
+            optionsPanel.SetActive(true);
+    }
+
+    /// <summary>オプションメニューを閉じる。</summary>
+    public void CloseOptions()
+    {
+        if (optionsPanel != null)
+            optionsPanel.SetActive(false);
+    }
+
+    /// <summary>オプションメニューの「タイトルへ戻る」ボタンから呼ぶ。</summary>
+    public void GoToTitle()
+    {
+        LoadScene(titleSceneName);
+    }
+
+    /// <summary>オプションメニューの「やり直し」ボタンから呼ぶ。現在のシーンを再読み込みする。</summary>
+    public void RetryStage()
+    {
+        LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void LoadScene(string sceneName)
@@ -91,5 +141,16 @@ public class GameManager : MonoBehaviour
     {
         isLoading = false;
         FadeIn();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionsPanel != null)
+            {
+                bool isActive = optionsPanel.activeSelf;
+                optionsPanel.SetActive(!isActive);
+            }
+        }
     }
 }
