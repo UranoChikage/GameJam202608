@@ -28,7 +28,17 @@ public class GameManager : MonoBehaviour
     [Tooltip("ここに含まれるシーンでのみOptionボタンを表示する（Novelパートのシーン名を入れる）")]
     [SerializeField] private string[] scenesWithOptionButton;
 
+    [Header("アクションパートのシーン")]
+    [Tooltip("ここに含まれるシーンをアクションパートとして扱う（オプション開閉でマウス表示を切り替える対象）")]
+    [SerializeField] private string[] actionPartScenes;
+
     private bool isLoading;
+
+    private bool IsActionPartScene(string sceneName)
+    {
+        return actionPartScenes != null &&
+               System.Array.IndexOf(actionPartScenes, sceneName) >= 0;
+    }
 
     private void Awake()
     {
@@ -74,6 +84,12 @@ public class GameManager : MonoBehaviour
     {
         if (optionsPanel != null)
             optionsPanel.SetActive(true);
+
+        if (IsActionPartScene(SceneManager.GetActiveScene().name))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     /// <summary>オプションメニューを閉じる。</summary>
@@ -81,6 +97,12 @@ public class GameManager : MonoBehaviour
     {
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
+
+        if (IsActionPartScene(SceneManager.GetActiveScene().name))
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     /// <summary>オプションメニューの「タイトルへ戻る」ボタンから呼ぶ。</summary>
@@ -170,8 +192,10 @@ public class GameManager : MonoBehaviour
         {
             if (optionsPanel != null)
             {
-                bool isActive = optionsPanel.activeSelf;
-                optionsPanel.SetActive(!isActive);
+                if (optionsPanel.activeSelf)
+                    CloseOptions();
+                else
+                    OpenOptions();
             }
         }
     }

@@ -758,7 +758,13 @@ MonoBehaviour:
   titleButton: {fileID: 1280102221817475198}
   retryButton: {fileID: 2585242050266923621}
   titleSceneName: Title
-  scenesWithOptionButton: []
+  scenesWithOptionButton:
+  - 2DNobel
+  actionPartScenes:
+  - Stage0
+  - Stage1
+  - Stage2
+  - Stage3
 --- !u!1 &6159452781848223649
 GameObject:
   m_ObjectHideFlags: 0
