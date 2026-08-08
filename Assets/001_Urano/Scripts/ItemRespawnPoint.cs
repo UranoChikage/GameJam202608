@@ -12,6 +12,12 @@ public class ItemRespawnPoint : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            // DeathZoneのColliderが薄いため、高速落下時のすり抜け(トンネリング)を防ぐ
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        }
     }
 
     public void ResetToStart()
