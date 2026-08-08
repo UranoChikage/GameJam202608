@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string[] actionPartScenes;
 
     private bool isLoading;
+    private EventSystem ownEventSystem;
 
     private bool IsActionPartScene(string sceneName)
     {
@@ -50,6 +52,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        ownEventSystem = GetComponentInChildren<EventSystem>(true);
+        RemoveDuplicateEventSystems();
+
         if (openOptionsButton != null)
             openOptionsButton.onClick.AddListener(OpenOptions);
 
@@ -66,6 +71,18 @@ public class GameManager : MonoBehaviour
             optionsPanel.SetActive(false);
 
         UpdateOptionButtonVisibility(SceneManager.GetActiveScene().name);
+    }
+
+    private void RemoveDuplicateEventSystems()
+    {
+        if (ownEventSystem == null) return;
+
+        var eventSystems = FindObjectsOfType<EventSystem>(true);
+        foreach (var es in eventSystems)
+        {
+            if (es != ownEventSystem)
+                Destroy(es.gameObject);
+        }
     }
 
     private void UpdateOptionButtonVisibility(string sceneName)
@@ -90,6 +107,8 @@ public class GameManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+
+        Time.timeScale = 0f;
     }
 
     /// <summary>オプションメニューを閉じる。</summary>
@@ -103,6 +122,8 @@ public class GameManager : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+
+        Time.timeScale = 1f;
     }
 
     /// <summary>オプションメニューの「タイトルへ戻る」ボタンから呼ぶ。</summary>
@@ -179,11 +200,13 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         isLoading = false;
+        Time.timeScale = 1f;
         FadeIn();
 
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
 
+        RemoveDuplicateEventSystems();
         UpdateOptionButtonVisibility(scene.name);
     }
     private void Update()
