@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   prefabs:
   - {fileID: 7976595604265308452, guid: b07b7987743342947a9f8b29eb889fec, type: 3}
-  initialSizePerPrefab: 2
+  initialSizePerPrefab: 5
 --- !u!54 &10329241298225028
 Rigidbody:
   m_ObjectHideFlags: 0
