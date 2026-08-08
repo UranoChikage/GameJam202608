@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -28,7 +29,18 @@ public class GameManager : MonoBehaviour
     [Tooltip("ここに含まれるシーンでのみOptionボタンを表示する（Novelパートのシーン名を入れる）")]
     [SerializeField] private string[] scenesWithOptionButton;
 
+    [Header("アクションパートのシーン")]
+    [Tooltip("ここに含まれるシーンをアクションパートとして扱う（オプション開閉でマウス表示を切り替える対象）")]
+    [SerializeField] private string[] actionPartScenes;
+
     private bool isLoading;
+    private EventSystem ownEventSystem;
+
+    private bool IsActionPartScene(string sceneName)
+    {
+        return actionPartScenes != null &&
+               System.Array.IndexOf(actionPartScenes, sceneName) >= 0;
+    }
 
     private void Awake()
     {
@@ -39,6 +51,9 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        ownEventSystem = GetComponentInChildren<EventSystem>(true);
+        RemoveDuplicateEventSystems();
 
         if (openOptionsButton != null)
             openOptionsButton.onClick.AddListener(OpenOptions);
@@ -58,6 +73,18 @@ public class GameManager : MonoBehaviour
         UpdateOptionButtonVisibility(SceneManager.GetActiveScene().name);
     }
 
+    private void RemoveDuplicateEventSystems()
+    {
+        if (ownEventSystem == null) return;
+
+        var eventSystems = FindObjectsOfType<EventSystem>(true);
+        foreach (var es in eventSystems)
+        {
+            if (es != ownEventSystem)
+                Destroy(es.gameObject);
+        }
+    }
+
     private void UpdateOptionButtonVisibility(string sceneName)
     {
         if (openOptionsButton == null) return;
@@ -74,6 +101,14 @@ public class GameManager : MonoBehaviour
     {
         if (optionsPanel != null)
             optionsPanel.SetActive(true);
+
+        if (IsActionPartScene(SceneManager.GetActiveScene().name))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        Time.timeScale = 0f;
     }
 
     /// <summary>オプションメニューを閉じる。</summary>
@@ -81,6 +116,14 @@ public class GameManager : MonoBehaviour
     {
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
+
+        if (IsActionPartScene(SceneManager.GetActiveScene().name))
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        Time.timeScale = 1f;
     }
 
     /// <summary>オプションメニューの「タイトルへ戻る」ボタンから呼ぶ。</summary>
@@ -157,11 +200,13 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         isLoading = false;
+        Time.timeScale = 1f;
         FadeIn();
 
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
 
+        RemoveDuplicateEventSystems();
         UpdateOptionButtonVisibility(scene.name);
     }
     private void Update()
@@ -170,8 +215,10 @@ public class GameManager : MonoBehaviour
         {
             if (optionsPanel != null)
             {
-                bool isActive = optionsPanel.activeSelf;
-                optionsPanel.SetActive(!isActive);
+                if (optionsPanel.activeSelf)
+                    CloseOptions();
+                else
+                    OpenOptions();
             }
         }
     }
