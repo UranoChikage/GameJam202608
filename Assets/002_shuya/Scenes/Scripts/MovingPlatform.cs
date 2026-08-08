@@ -3,7 +3,7 @@
 /// <summary>
 /// Moves a platform back and forth from its starting position.
 /// </summary>
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatform : MonoBehaviour, IMovingPlatform
 {
     public enum MoveDirection
     {
@@ -25,10 +25,15 @@ public class MovingPlatform : MonoBehaviour
     private Vector3 movementAxis;
     private float movementProgress;
     private Rigidbody platformRigidbody;
+    private Vector3 previousPosition;
+
+    /// <summary>直前のFixedUpdateからの移動量。乗っているプレイヤー等に加算するために使う。</summary>
+    public Vector3 DeltaMovement { get; private set; }
 
     private void Awake()
     {
         startPosition = transform.position;
+        previousPosition = startPosition;
         movementAxis = GetDirection();
         platformRigidbody = GetComponent<Rigidbody>();
 
@@ -40,12 +45,18 @@ public class MovingPlatform : MonoBehaviour
             platformRigidbody.interpolation =
                 RigidbodyInterpolation.Interpolate;
         }
+
+        // 接触摩擦による押し出しとDeltaMovementの手動加算が二重に効くのを防ぐ
+        MovingPlatformFriction.ApplyFrictionless(
+            GetComponentsInChildren<Collider>()
+        );
     }
 
     private void FixedUpdate()
     {
         if (speed <= 0f || moveDistance <= 0f)
         {
+            DeltaMovement = Vector3.zero;
             return;
         }
 
@@ -73,6 +84,9 @@ public class MovingPlatform : MonoBehaviour
         {
             transform.position = targetPosition;
         }
+
+        DeltaMovement = targetPosition - previousPosition;
+        previousPosition = targetPosition;
     }
 
     private Vector3 GetDirection()

@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 [ExecuteAlways]
 [RequireComponent(typeof(Rigidbody))]
-public class SplineFollower : MonoBehaviour
+public class SplineFollower : MonoBehaviour, IMovingPlatform
 {
     [SerializeField]
     SplineContainer container;
@@ -23,12 +23,22 @@ public class SplineFollower : MonoBehaviour
     Vector3 targetPosition;
     Quaternion targetRotation;
     bool hasTargetRotation;
+    Vector3 previousPosition;
+
+    /// <summary>直前のFixedUpdateからの移動量。乗っているプレイヤー等に加算するために使う。</summary>
+    public Vector3 DeltaMovement { get; private set; }
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Splineに沿って直接動かすため物理演算(重力等)の影響は受けない
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+        previousPosition = transform.position;
+
+        // 接触摩擦による押し出しとDeltaMovementの手動加算が二重に効くのを防ぐ
+        MovingPlatformFriction.ApplyFrictionless(
+            GetComponentsInChildren<Collider>()
+        );
     }
 
     void Update()
@@ -82,5 +92,8 @@ public class SplineFollower : MonoBehaviour
             Quaternion rotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed);
             rb.MoveRotation(rotation);
         }
+
+        DeltaMovement = targetPosition - previousPosition;
+        previousPosition = targetPosition;
     }
 }
