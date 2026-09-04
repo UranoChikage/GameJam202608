@@ -367,6 +367,14 @@ public class PlayerScript : MonoBehaviour
         heldColliders = null;
         Debug.Log("アイテムを落としました");
     }
+
+    /// <summary>保持中のアイテムが自身を破棄する際などに、保持状態をクリアするために呼び出す</summary>
+    public void ClearHeldItem()
+    {
+        heldRigidbody = null;
+        heldItem = null;
+        heldColliders = null;
+    }
     public void Interact()
     {
         if (playerCamera == null)

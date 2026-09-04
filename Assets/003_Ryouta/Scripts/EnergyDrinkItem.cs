@@ -25,6 +25,7 @@ public class EnergyDrinkItem :
 
         DamageVignetteEffect.TryPlayBoostEffect(effectDuration);
 
+        player.ClearHeldItem();
         Destroy(gameObject);
     }
 }

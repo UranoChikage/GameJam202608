@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0
-  m_AmbientMode: 0
+  m_AmbientIntensity: 0.2
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: da3d8fe69a1193c4ea5f896aaeed018b, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: ed19ddc2b1ab34b4282275974e81560d, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 96757233}
   - component: {fileID: 96757232}
   - component: {fileID: 96757231}
+  - component: {fileID: 96757235}
   m_Layer: 0
   m_Name: Cube (14)
   m_TagString: Untagged
@@ -628,6 +629,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1522163362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96757235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96757230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &100044136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -789,6 +806,71 @@ Transform:
   - {fileID: 52097806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &115217488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 115217490}
+  - component: {fileID: 115217489}
+  m_Layer: 0
+  m_Name: Reflection Probe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!215 &115217489
+ReflectionProbe:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115217488}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 0
+  m_RefreshMode: 0
+  m_TimeSlicingMode: 0
+  m_Resolution: 128
+  m_UpdateFrequency: 0
+  m_BoxSize: {x: 16, y: 5, z: 35}
+  m_BoxOffset: {x: 0, y: 0, z: 0}
+  m_NearClip: 0.3
+  m_FarClip: 1000
+  m_ShadowDistance: 100
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IntensityMultiplier: 0.5
+  m_BlendDistance: 1
+  m_HDR: 1
+  m_BoxProjection: 0
+  m_RenderDynamicObjects: 0
+  m_UseOcclusionCulling: 1
+  m_Importance: 1
+  m_CustomBakedTexture: {fileID: 0}
+--- !u!4 &115217490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115217488}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.38, y: 1.92, z: -28.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122894070
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +883,7 @@ GameObject:
   - component: {fileID: 122894073}
   - component: {fileID: 122894072}
   - component: {fileID: 122894071}
+  - component: {fileID: 122894075}
   m_Layer: 4
   m_Name: takasa6
   m_TagString: Untagged
@@ -901,6 +984,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1019379937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &122894075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122894070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &150539356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1217,19 +1316,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
---- !u!134 &197173978
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: MovingPlatform_Frictionless
-  serializedVersion: 2
-  m_DynamicFriction: 0
-  m_StaticFriction: 0
-  m_Bounciness: 0
-  m_FrictionCombine: 2
-  m_BounceCombine: 2
 --- !u!4 &215757386 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6399225270375615491, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
@@ -1400,6 +1486,7 @@ GameObject:
   - component: {fileID: 232431470}
   - component: {fileID: 232431469}
   - component: {fileID: 232431468}
+  - component: {fileID: 232431471}
   m_Layer: 4
   m_Name: Plane (3)
   m_TagString: Untagged
@@ -1501,6 +1588,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232431466}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &232431471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232431466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &239123378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,6 +1616,7 @@ GameObject:
   - component: {fileID: 239123382}
   - component: {fileID: 239123381}
   - component: {fileID: 239123380}
+  - component: {fileID: 239123383}
   m_Layer: 4
   m_Name: takasa2(2)
   m_TagString: Untagged
@@ -1613,6 +1717,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239123378}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &239123383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239123378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &248605953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,6 +1745,7 @@ GameObject:
   - component: {fileID: 248605956}
   - component: {fileID: 248605955}
   - component: {fileID: 248605954}
+  - component: {fileID: 248605958}
   m_Layer: 4
   m_Name: Plane
   m_TagString: Untagged
@@ -1726,6 +1847,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 51695556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &248605958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248605953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &281449769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1866,6 +2003,7 @@ GameObject:
   - component: {fileID: 332254228}
   - component: {fileID: 332254227}
   - component: {fileID: 332254226}
+  - component: {fileID: 332254229}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1966,6 +2104,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332254224}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &332254229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332254224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &332710273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2207,7 @@ GameObject:
   - component: {fileID: 358266844}
   - component: {fileID: 358266843}
   - component: {fileID: 358266842}
+  - component: {fileID: 358266845}
   m_Layer: 4
   m_Name: takasa2 (5)
   m_TagString: Untagged
@@ -2153,6 +2308,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358266840}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &358266845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358266840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &378084727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,6 +2336,7 @@ GameObject:
   - component: {fileID: 378084731}
   - component: {fileID: 378084730}
   - component: {fileID: 378084729}
+  - component: {fileID: 378084732}
   m_Layer: 4
   m_Name: takasa2 (10)
   m_TagString: Untagged
@@ -2265,6 +2437,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378084727}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &378084732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378084727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &386728913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2465,7 @@ GameObject:
   - component: {fileID: 386728917}
   - component: {fileID: 386728916}
   - component: {fileID: 386728915}
+  - component: {fileID: 386728918}
   m_Layer: 4
   m_Name: takasa2 (12)
   m_TagString: Untagged
@@ -2377,6 +2566,149 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386728913}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &386728918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386728913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
+--- !u!1 &425829969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425829972}
+  - component: {fileID: 425829971}
+  - component: {fileID: 425829970}
+  m_Layer: 0
+  m_Name: Point Light (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &425829970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425829969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &425829971
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425829969}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &425829972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425829969}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.08020802, y: -0.90864104, z: 0.20537713, w: 0.35462436}
+  m_LocalPosition: {x: 41.27, y: 2.85, z: -94.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &433375220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2456,8 +2788,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 153439514602380505, guid: 2e69c96be7d728849944e77df741165f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1523013796639275147, guid: 2e69c96be7d728849944e77df741165f, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 151.44678
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104209899189765179, guid: 2e69c96be7d728849944e77df741165f, type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5272464833395347518, guid: 2e69c96be7d728849944e77df741165f, type: 3}
@@ -2466,7 +2806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6149012349367809578, guid: 2e69c96be7d728849944e77df741165f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 151.14323
       objectReference: {fileID: 0}
     - target: {fileID: 8679248780841480174, guid: 2e69c96be7d728849944e77df741165f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2525,6 +2865,7 @@ GameObject:
   - component: {fileID: 466530030}
   - component: {fileID: 466530029}
   - component: {fileID: 466530028}
+  - component: {fileID: 466530032}
   m_Layer: 4
   m_Name: takasa2
   m_TagString: Untagged
@@ -2625,6 +2966,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1019379937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &466530032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466530027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &491235325
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,6 +2994,7 @@ GameObject:
   - component: {fileID: 491235329}
   - component: {fileID: 491235328}
   - component: {fileID: 491235327}
+  - component: {fileID: 491235330}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -2737,6 +3095,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491235325}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &491235330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491235325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &512473025
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,6 +3123,7 @@ GameObject:
   - component: {fileID: 512473028}
   - component: {fileID: 512473027}
   - component: {fileID: 512473026}
+  - component: {fileID: 512473030}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -2849,6 +3224,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1522163362}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0.001}
+--- !u!114 &512473030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512473025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!4 &526609280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7858763117680054332, guid: c485e609fe09c2046b6de12fd7180c78, type: 3}
@@ -2928,6 +3319,7 @@ GameObject:
   - component: {fileID: 569550772}
   - component: {fileID: 569550771}
   - component: {fileID: 569550770}
+  - component: {fileID: 569550773}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -3028,6 +3420,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569550768}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &569550773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569550768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &573645712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,6 +3448,7 @@ GameObject:
   - component: {fileID: 573645715}
   - component: {fileID: 573645714}
   - component: {fileID: 573645713}
+  - component: {fileID: 573645717}
   m_Layer: 4
   m_Name: takasa4
   m_TagString: Untagged
@@ -3140,6 +3549,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1019379937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &573645717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573645712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &636898571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,6 +3577,7 @@ GameObject:
   - component: {fileID: 636898575}
   - component: {fileID: 636898574}
   - component: {fileID: 636898573}
+  - component: {fileID: 636898576}
   m_Layer: 0
   m_Name: Cube (18)
   m_TagString: Untagged
@@ -3252,6 +3678,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636898571}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &636898576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636898571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &641055526
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,6 +3902,7 @@ GameObject:
   - component: {fileID: 684512231}
   - component: {fileID: 684512230}
   - component: {fileID: 684512229}
+  - component: {fileID: 684512232}
   m_Layer: 4
   m_Name: takasa2 (9)
   m_TagString: Untagged
@@ -3560,6 +4003,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684512227}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &684512232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684512227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &706915200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3572,6 +4031,7 @@ GameObject:
   - component: {fileID: 706915204}
   - component: {fileID: 706915203}
   - component: {fileID: 706915202}
+  - component: {fileID: 706915205}
   m_Layer: 4
   m_Name: takasa6 (1)
   m_TagString: Untagged
@@ -3672,6 +4132,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706915200}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &706915205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706915200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &717753357
 GameObject:
   m_ObjectHideFlags: 0
@@ -3684,6 +4160,7 @@ GameObject:
   - component: {fileID: 717753361}
   - component: {fileID: 717753360}
   - component: {fileID: 717753359}
+  - component: {fileID: 717753362}
   m_Layer: 4
   m_Name: takasa2 (4)
   m_TagString: Untagged
@@ -3784,6 +4261,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717753357}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &717753362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717753357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &721649318
 GameObject:
   m_ObjectHideFlags: 0
@@ -3796,6 +4289,7 @@ GameObject:
   - component: {fileID: 721649321}
   - component: {fileID: 721649320}
   - component: {fileID: 721649319}
+  - component: {fileID: 721649323}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -3896,6 +4390,149 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1522163362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &721649323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721649318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
+--- !u!1 &747440175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747440178}
+  - component: {fileID: 747440177}
+  - component: {fileID: 747440176}
+  m_Layer: 0
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &747440176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747440175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &747440177
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747440175}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &747440178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747440175}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.81, y: 4.021, z: -14.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &747643830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3908,6 +4545,7 @@ GameObject:
   - component: {fileID: 747643834}
   - component: {fileID: 747643833}
   - component: {fileID: 747643832}
+  - component: {fileID: 747643835}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
@@ -4008,6 +4646,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747643830}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &747643835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747643830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!4 &748456814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7858763117680054332, guid: c485e609fe09c2046b6de12fd7180c78, type: 3}
@@ -4043,6 +4697,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1333204103}
+  - {fileID: 1540415292}
   - {fileID: 566050595}
   - {fileID: 433375222}
   m_Father: {fileID: 0}
@@ -4130,6 +4785,7 @@ GameObject:
   - component: {fileID: 785194235}
   - component: {fileID: 785194234}
   - component: {fileID: 785194233}
+  - component: {fileID: 785194237}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4230,6 +4886,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1522163362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &785194237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785194232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &831778665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4386,6 +5058,7 @@ GameObject:
   - component: {fileID: 894896426}
   - component: {fileID: 894896425}
   - component: {fileID: 894896424}
+  - component: {fileID: 894896427}
   m_Layer: 4
   m_Name: takasa2 (8)
   m_TagString: Untagged
@@ -4486,6 +5159,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894896422}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &894896427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894896422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!4 &919939117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7858763117680054332, guid: c485e609fe09c2046b6de12fd7180c78, type: 3}
@@ -4650,6 +5339,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4334195614882854445, guid: 569cc00b4cd047c43a433835f385e7ac, type: 3}
   m_PrefabInstance: {fileID: 946395720}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &957965310
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 748477271}
+    m_Modifications:
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865673307204770579, guid: 545d00e1dd201334185072f722788766, type: 3}
+      propertyPath: m_Name
+      value: EnergyDrink (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 545d00e1dd201334185072f722788766, type: 3}
 --- !u!1 &961178196
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,6 +5408,7 @@ GameObject:
   - component: {fileID: 961178200}
   - component: {fileID: 961178199}
   - component: {fileID: 961178198}
+  - component: {fileID: 961178201}
   m_Layer: 4
   m_Name: takasa8 (1)
   m_TagString: Untagged
@@ -4762,6 +5509,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961178196}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &961178201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961178196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &968107788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4892,6 +5655,7 @@ GameObject:
   - component: {fileID: 974225665}
   - component: {fileID: 974225664}
   - component: {fileID: 974225663}
+  - component: {fileID: 974225666}
   m_Layer: 0
   m_Name: Cube (9)
   m_TagString: Untagged
@@ -4992,6 +5756,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974225661}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &974225666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974225661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &976094332
 GameObject:
   m_ObjectHideFlags: 0
@@ -5256,6 +6036,7 @@ GameObject:
   - component: {fileID: 1027617662}
   - component: {fileID: 1027617661}
   - component: {fileID: 1027617660}
+  - component: {fileID: 1027617663}
   m_Layer: 0
   m_Name: Cube (16)
   m_TagString: Untagged
@@ -5356,6 +6137,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027617658}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1027617663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027617658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &1052034377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5429,6 +6226,7 @@ GameObject:
   - component: {fileID: 1061173094}
   - component: {fileID: 1061173093}
   - component: {fileID: 1061173092}
+  - component: {fileID: 1061173095}
   m_Layer: 4
   m_Name: takasa6 (2)
   m_TagString: Untagged
@@ -5529,6 +6327,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061173090}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1061173095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061173090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &1066871872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5716,6 +6530,7 @@ GameObject:
   - component: {fileID: 1131915798}
   - component: {fileID: 1131915797}
   - component: {fileID: 1131915796}
+  - component: {fileID: 1131915799}
   m_Layer: 4
   m_Name: takasa2 (1)
   m_TagString: Untagged
@@ -5816,6 +6631,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1131915794}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1131915799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131915794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1135480604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5828,6 +6659,7 @@ GameObject:
   - component: {fileID: 1135480608}
   - component: {fileID: 1135480607}
   - component: {fileID: 1135480606}
+  - component: {fileID: 1135480609}
   m_Layer: 0
   m_Name: Cube (15)
   m_TagString: Untagged
@@ -5928,6 +6760,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135480604}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1135480609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135480604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &1188089964
 GameObject:
   m_ObjectHideFlags: 0
@@ -5940,6 +6788,7 @@ GameObject:
   - component: {fileID: 1188089968}
   - component: {fileID: 1188089967}
   - component: {fileID: 1188089966}
+  - component: {fileID: 1188089969}
   m_Layer: 4
   m_Name: takasa2 (6)
   m_TagString: Untagged
@@ -6040,6 +6889,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188089964}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1188089969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188089964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &1211351780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6545,6 +7410,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4627643578584424943, guid: 9652c2597ca95da4da41baf563681bab, type: 3}
   m_PrefabInstance: {fileID: 1237996948}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &1405383431
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MovingPlatform_Frictionless
+  serializedVersion: 2
+  m_DynamicFriction: 0
+  m_StaticFriction: 0
+  m_Bounciness: 0
+  m_FrictionCombine: 2
+  m_BounceCombine: 2
 --- !u!1 &1408442113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6720,6 +7598,7 @@ GameObject:
   - component: {fileID: 1438903302}
   - component: {fileID: 1438903301}
   - component: {fileID: 1438903300}
+  - component: {fileID: 1438903303}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -6820,6 +7699,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438903298}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1438903303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438903298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!4 &1449053275 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4627643578584424943, guid: 9652c2597ca95da4da41baf563681bab, type: 3}
@@ -6837,6 +7732,7 @@ GameObject:
   - component: {fileID: 1460268471}
   - component: {fileID: 1460268470}
   - component: {fileID: 1460268469}
+  - component: {fileID: 1460268472}
   m_Layer: 0
   m_Name: Cube (19)
   m_TagString: Untagged
@@ -6937,6 +7833,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460268467}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1460268472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460268467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &1470413150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6990,14 +7902,173 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_Range
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_Intensity
+      value: 36.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_SpotAngle
+      value: 108.540825
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 89.38372
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: -6.2849968e+29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 9.19e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 7.4e-43
+      value: 9.4e-44
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
+--- !u!1 &1503984351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503984354}
+  - component: {fileID: 1503984353}
+  - component: {fileID: 1503984352}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1503984352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503984351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 0
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &1503984353
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503984351}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.2
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.5
+    m_NormalBias: 0.5
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &1503984354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503984351}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 11.70706, y: 1.99613, z: -3.23609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1506262770
 GameObject:
   m_ObjectHideFlags: 0
@@ -7041,6 +8112,7 @@ GameObject:
   - component: {fileID: 1511707123}
   - component: {fileID: 1511707122}
   - component: {fileID: 1511707121}
+  - component: {fileID: 1511707124}
   m_Layer: 0
   m_Name: Cube (20)
   m_TagString: Untagged
@@ -7141,6 +8213,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511707119}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1511707124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511707119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &1512282263
 GameObject:
   m_ObjectHideFlags: 0
@@ -7153,6 +8241,7 @@ GameObject:
   - component: {fileID: 1512282267}
   - component: {fileID: 1512282266}
   - component: {fileID: 1512282265}
+  - component: {fileID: 1512282268}
   m_Layer: 4
   m_Name: takasa2 (2)
   m_TagString: Untagged
@@ -7253,6 +8342,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512282263}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1512282268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512282263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1522163361
 GameObject:
   m_ObjectHideFlags: 0
@@ -7305,6 +8410,11 @@ Transform:
   - {fileID: 636898572}
   m_Father: {fileID: 1242359806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1540415292 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 534001473123055044, guid: 545d00e1dd201334185072f722788766, type: 3}
+  m_PrefabInstance: {fileID: 957965310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591030682
 GameObject:
   m_ObjectHideFlags: 0
@@ -7471,6 +8581,7 @@ GameObject:
   - component: {fileID: 1635339631}
   - component: {fileID: 1635339630}
   - component: {fileID: 1635339629}
+  - component: {fileID: 1635339632}
   m_Layer: 0
   m_Name: Cube (10)
   m_TagString: Untagged
@@ -7571,6 +8682,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635339627}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1635339632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635339627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &1640954059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7644,6 +8771,7 @@ GameObject:
   - component: {fileID: 1645606440}
   - component: {fileID: 1645606439}
   - component: {fileID: 1645606438}
+  - component: {fileID: 1645606441}
   m_Layer: 0
   m_Name: Cube (17)
   m_TagString: Untagged
@@ -7744,6 +8872,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645606436}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1645606441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645606436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!4 &1658798139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7858763117680054332, guid: c485e609fe09c2046b6de12fd7180c78, type: 3}
@@ -7818,6 +8962,7 @@ GameObject:
   - component: {fileID: 1679782459}
   - component: {fileID: 1679782458}
   - component: {fileID: 1679782457}
+  - component: {fileID: 1679782460}
   m_Layer: 4
   m_Name: takasa2(1)
   m_TagString: Untagged
@@ -7918,6 +9063,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679782455}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1679782460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679782455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1692875123
 GameObject:
   m_ObjectHideFlags: 0
@@ -7930,6 +9091,7 @@ GameObject:
   - component: {fileID: 1692875126}
   - component: {fileID: 1692875125}
   - component: {fileID: 1692875124}
+  - component: {fileID: 1692875128}
   m_Layer: 0
   m_Name: Cube (13)
   m_TagString: Untagged
@@ -8030,6 +9192,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1522163362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1692875128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692875123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &1702277656
 GameObject:
   m_ObjectHideFlags: 0
@@ -8178,6 +9356,7 @@ GameObject:
   - component: {fileID: 1730695763}
   - component: {fileID: 1730695762}
   - component: {fileID: 1730695761}
+  - component: {fileID: 1730695764}
   m_Layer: 4
   m_Name: Plane (1)
   m_TagString: Untagged
@@ -8279,6 +9458,149 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730695759}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1730695764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730695759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
+--- !u!1 &1783905322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783905325}
+  - component: {fileID: 1783905324}
+  - component: {fileID: 1783905323}
+  m_Layer: 0
+  m_Name: Point Light (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1783905323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783905322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &1783905324
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783905322}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &1783905325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783905322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 53.91, y: 10.49, z: -28.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1793891067
 GameObject:
   m_ObjectHideFlags: 0
@@ -8291,6 +9613,7 @@ GameObject:
   - component: {fileID: 1793891071}
   - component: {fileID: 1793891070}
   - component: {fileID: 1793891069}
+  - component: {fileID: 1793891072}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -8391,6 +9714,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793891067}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1793891072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793891067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1001 &1795004439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8464,6 +9803,7 @@ GameObject:
   - component: {fileID: 1810618466}
   - component: {fileID: 1810618465}
   - component: {fileID: 1810618464}
+  - component: {fileID: 1810618467}
   m_Layer: 4
   m_Name: takasa2 (7)
   m_TagString: Untagged
@@ -8564,6 +9904,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810618462}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1810618467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810618462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &1818021873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8642,6 +9998,7 @@ GameObject:
   - component: {fileID: 1818871355}
   - component: {fileID: 1818871354}
   - component: {fileID: 1818871353}
+  - component: {fileID: 1818871356}
   m_Layer: 4
   m_Name: takasa2 (3)
   m_TagString: Untagged
@@ -8742,6 +10099,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818871351}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1818871356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818871351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1834804089
 GameObject:
   m_ObjectHideFlags: 0
@@ -8754,6 +10127,7 @@ GameObject:
   - component: {fileID: 1834804093}
   - component: {fileID: 1834804092}
   - component: {fileID: 1834804091}
+  - component: {fileID: 1834804094}
   m_Layer: 4
   m_Name: Plane (2)
   m_TagString: Untagged
@@ -8855,6 +10229,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834804089}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1834804094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834804089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1836152647
 GameObject:
   m_ObjectHideFlags: 0
@@ -8867,6 +10257,7 @@ GameObject:
   - component: {fileID: 1836152650}
   - component: {fileID: 1836152649}
   - component: {fileID: 1836152648}
+  - component: {fileID: 1836152652}
   m_Layer: 4
   m_Name: Plane (2)
   m_TagString: Untagged
@@ -8968,6 +10359,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 51695556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836152652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836152647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &1903116549
 GameObject:
   m_ObjectHideFlags: 0
@@ -9011,6 +10418,7 @@ GameObject:
   - component: {fileID: 1964794236}
   - component: {fileID: 1964794235}
   - component: {fileID: 1964794234}
+  - component: {fileID: 1964794237}
   m_Layer: 0
   m_Name: Cube (12)
   m_TagString: Untagged
@@ -9111,6 +10519,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964794232}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1964794237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964794232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!1 &1979444492
 GameObject:
   m_ObjectHideFlags: 0
@@ -9123,6 +10547,7 @@ GameObject:
   - component: {fileID: 1979444496}
   - component: {fileID: 1979444495}
   - component: {fileID: 1979444494}
+  - component: {fileID: 1979444497}
   m_Layer: 4
   m_Name: takasa8
   m_TagString: Untagged
@@ -9223,6 +10648,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979444492}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1979444497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979444492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1 &2038780829
 GameObject:
   m_ObjectHideFlags: 0
@@ -9235,6 +10676,7 @@ GameObject:
   - component: {fileID: 2038780833}
   - component: {fileID: 2038780832}
   - component: {fileID: 2038780831}
+  - component: {fileID: 2038780834}
   m_Layer: 0
   m_Name: Cube (11)
   m_TagString: Untagged
@@ -9335,6 +10777,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038780829}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2038780834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038780829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 0.2
+  uAxis: 0
+  vAxis: 1
+  texturePropertyName: _BaseMap
 --- !u!4 &2042038132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6399225270375615491, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
@@ -9352,6 +10810,7 @@ GameObject:
   - component: {fileID: 2096877690}
   - component: {fileID: 2096877689}
   - component: {fileID: 2096877688}
+  - component: {fileID: 2096877691}
   m_Layer: 4
   m_Name: takasa2 (11)
   m_TagString: Untagged
@@ -9452,6 +10911,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096877686}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2096877691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096877686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1bd9cd04aa7234f9f956501bf29787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoTiling
+  tilingPerUnit: 1
+  uAxis: 0
+  vAxis: 2
+  texturePropertyName: _BaseMap
 --- !u!1001 &2110353920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9652,3 +11127,8 @@ SceneRoots:
   - {fileID: 114941050}
   - {fileID: 435187488}
   - {fileID: 981093057}
+  - {fileID: 1503984354}
+  - {fileID: 115217490}
+  - {fileID: 747440178}
+  - {fileID: 1783905325}
+  - {fileID: 425829972}

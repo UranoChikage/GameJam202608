@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa3b633473504247acbeb2a5d417a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirController
-  mouseSensitivity: 150
+  mouseSensitivity: 400
   minPitch: -85
   maxPitch: 85
   lockCursor: 1
@@ -1087,7 +1087,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 3.4e-44, w: 1.7e-44}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0

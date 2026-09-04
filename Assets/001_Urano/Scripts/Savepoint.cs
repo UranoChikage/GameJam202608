@@ -4,6 +4,14 @@ public class Savepoint : MonoBehaviour
 {
     [SerializeField]
     StartPoint point;
+
+    private void Start()
+    {
+        if (point != null)
+        {
+            point = FindObjectOfType<StartPoint>();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.TryGetComponent<PlayerScript>(out _)) 
