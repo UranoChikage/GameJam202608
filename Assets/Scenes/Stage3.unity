@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 32f62deb215bfb04680fff62b1b8572e, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 0c13cc2793880974e8e9cbb5929677ac, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -8050,19 +8050,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 3e-45
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 8.16e-43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 2.204052e-39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059833244287780511, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 9.87e-42
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5481729128427928140, guid: de9fdb4da8cdae64baecc98a8c19ba9f, type: 3}
       propertyPath: jumpForce
