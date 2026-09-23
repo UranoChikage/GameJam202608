@@ -3,6 +3,8 @@
 /// <summary>
 /// Moves a platform back and forth from its starting position.
 /// </summary>
+// DeltaMovementを参照するFPSCameraControllerより先にFixedUpdateを実行させるため、実行順序を明示する。
+[DefaultExecutionOrder(-100)]
 public class MovingPlatform : MonoBehaviour, IMovingPlatform
 {
     public enum MoveDirection

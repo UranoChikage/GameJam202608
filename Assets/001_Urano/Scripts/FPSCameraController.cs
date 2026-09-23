@@ -65,6 +65,12 @@ public class FPSCameraController : MonoBehaviour
 
         rb.freezeRotation = true;
 
+        // 壁のコーナーに毎フレーム上書きする速度がぶつかると摩擦で引っかかって
+        // 止まってしまうため、足場と同様に摩擦をゼロにする
+        MovingPlatformFriction.ApplyFrictionless(
+            new Collider[] { capsuleCollider }
+        );
+
         // 立っている状態を保存
         standingHeight = capsuleCollider.height;
         standingCenter = capsuleCollider.center;

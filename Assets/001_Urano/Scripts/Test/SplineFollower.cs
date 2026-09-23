@@ -4,6 +4,8 @@ using UnityEngine.Splines;
 
 [ExecuteAlways]
 [RequireComponent(typeof(Rigidbody))]
+// DeltaMovementを参照するFPSCameraControllerより先にFixedUpdateを実行させるため、実行順序を明示する。
+[DefaultExecutionOrder(-100)]
 public class SplineFollower : MonoBehaviour, IMovingPlatform
 {
     [SerializeField]
