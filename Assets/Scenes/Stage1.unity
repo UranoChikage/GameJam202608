@@ -651,7 +651,7 @@ Transform:
   m_GameObject: {fileID: 57740562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10.46, y: 2.55, z: -21.65}
+  m_LocalPosition: {x: 11.55, y: 2.55, z: -2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1367,7 +1367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6399225270375615491, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.11
+      value: 1.71
       objectReference: {fileID: 0}
     - target: {fileID: 6399225270375615491, guid: f35aadbfd3f4409479bd4ecab9a2625c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7084,19 +7084,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ba3037db940b8a46bf44b329bd3d0f9, type: 3}
   m_PrefabInstance: {fileID: 631607962}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &1085445849
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: MovingPlatform_Frictionless
-  serializedVersion: 2
-  m_DynamicFriction: 0
-  m_StaticFriction: 0
-  m_Bounciness: 0
-  m_FrictionCombine: 2
-  m_BounceCombine: 2
 --- !u!4 &1105995045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2103c8800a67e84fac441554fd9e62e, type: 3}
@@ -8160,6 +8147,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 810003222467593768, guid: eb31a4ae3bfd685498565d541ed03a32, type: 3}
   m_PrefabInstance: {fileID: 1246701148}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &1253101845
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MovingPlatform_Frictionless
+  serializedVersion: 2
+  m_DynamicFriction: 0
+  m_StaticFriction: 0
+  m_Bounciness: 0
+  m_FrictionCombine: 2
+  m_BounceCombine: 2
 --- !u!4 &1256794431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2eb29481c57e244bbccc3d0421df547, type: 3}
